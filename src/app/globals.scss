@@ -1,0 +1,379 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --h1-margin-top: 26px;
+    --h1-margin-bottom: 10px;
+    --h1-font-size: 26px;
+    --h2-margin-top: 22px;
+    --h2-margin-bottom: 8px;
+    --h2-font-size: 22px;
+    --h3-margin-top: 20px;
+    --h3-margin-bottom: 8px;
+    --h3-font-size: 20px;
+    --h4-margin-top: 18px;
+    --h4-margin-bottom: 8px;
+    --h4-font-size: 18px;
+    --h5-margin-top: 18px;
+    --h5-margin-bottom: 8px;
+    --h5-font-size: 16px;
+    --h6-margin-top: 16px;
+    --h6-margin-bottom: 8px;
+    --h6-font-size: 16px;
+
+    --common-row-margin-top: 8px;
+    --common-row-margin-bottom: 8px;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.tiptap {
+  font-size: 16px;
+  word-break: break-word;
+  line-height: 1.5;
+
+  & > :first-child {
+    margin-top: 0 !important;
+  }
+
+  .ProseMirror-selectednode {
+  }
+
+  /* ----------------------------------- List styles ----------------------------------- */
+
+  ul,
+  ol {
+    padding: 0 1rem;
+    // margin: 1.25rem 1rem 1.25rem 0.4rem;
+  }
+
+  ul li {
+    list-style-type: disc;
+
+    // p {
+    //   margin-top: 0.25em;
+    //   margin-bottom: 0.25em;
+    // }
+  }
+
+  ol li {
+    list-style-type: decimal;
+
+    // p {
+    //   margin-top: 0.25em;
+    //   margin-bottom: 0.25em;
+    // }
+  }
+
+  /* ----------------------------------- List styles ----------------------------------- */
+
+  /* ----------------------------------- Task list styles ----------------------------------- */
+
+  ul[data-type='taskList'] {
+    list-style: none;
+    margin-left: 0;
+    padding: 0;
+
+    li {
+      align-items: flex-start;
+      display: flex;
+
+      > label {
+        flex: 0 0 auto;
+        margin-right: 0.5rem;
+        user-select: none;
+      }
+
+      > div {
+        flex: 1 1 auto;
+      }
+    }
+
+    input[type='checkbox'] {
+      cursor: pointer;
+    }
+
+    ul[data-type='taskList'] {
+      margin: 0;
+    }
+  }
+
+  /* ----------------------------------- Task list styles ----------------------------------- */
+
+  /* ----------------------------------- Heading styles ----------------------------------- */
+
+  // h1,
+  // h2,
+  // h3,
+  // h4,
+  // h5,
+  // h6 {
+  //   line-height: 1.1;
+  //   margin-top: 2.5rem;
+  //   text-wrap: pretty;
+  // }
+
+  // h1,
+  // h2 {
+  //   margin-top: 3.5rem;
+  //   margin-bottom: 1.5rem;
+  // }
+
+  // h1 {
+  //   font-size: 1.4rem;
+  // }
+
+  // h2 {
+  //   font-size: 1.2rem;
+  // }
+
+  // h3 {
+  //   font-size: 1.1rem;
+  // }
+
+  // h4,
+  // h5,
+  // h6 {
+  //   font-size: 1rem;
+  // }
+
+  /* ----------------------------------- Heading styles ----------------------------------- */
+
+  /* ----------------------------------- Placeholder styles https://tiptap.dev/docs/editor/extensions/functionality/placeholder ----------------------------------- */
+
+  p.is-editor-empty:first-child::before {
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
+  /* ----------------------------------- Placeholder styles https://tiptap.dev/docs/editor/extensions/functionality/placeholder ----------------------------------- */
+
+  /* ----------------------------------- Table styles ----------------------------------- */
+  table {
+    border-collapse: collapse;
+    margin: 0;
+    overflow: hidden;
+    table-layout: fixed;
+    width: 100%;
+
+    td,
+    th {
+      border: 1px solid #dee0e3;
+      box-sizing: border-box;
+      min-width: 1em;
+      padding: 6px 8px;
+      position: relative;
+      vertical-align: top;
+
+      > * {
+        margin-bottom: 0;
+      }
+    }
+
+    th {
+      background-color: #f2f3f5;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .selectedCell:after {
+      // background: hsl(var(--primary-foreground));
+      content: '';
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      position: absolute;
+      z-index: 2;
+    }
+    th.selectedCell,
+    td.selectedCell {
+      background: #ccd9fd;
+    }
+
+    .column-resize-handle {
+      background-color: hsl(var(--primary));
+      bottom: -2px;
+      pointer-events: none;
+      position: absolute;
+      right: -2px;
+      top: 0;
+      width: 4px;
+    }
+  }
+
+  .tableWrapper {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+
+  &.resize-cursor {
+    cursor: col-resize;
+  }
+
+  /* ----------------------------------- Table styles ----------------------------------- */
+
+  /* ----------------------------------- Image styles ----------------------------------- */
+
+  img {
+    display: block;
+    height: auto;
+    margin: 1.5rem 0;
+    max-width: 100%;
+
+    &.ProseMirror-selectednode {
+      outline: 3px solid hsl(var(--primary));
+    }
+  }
+
+  /* ----------------------------------- Image styles ----------------------------------- */
+
+  .paragraph-node {
+    margin-top: var(--common-row-margin-top);
+    margin-bottom: var(--common-row-margin-bottom);
+  }
+
+  .heading-node {
+    font-weight: 700;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  h1.heading-node {
+    margin-top: var(--h1-margin-top);
+    margin-bottom: var(--h1-margin-bottom);
+    font-size: var(--h1-font-size);
+  }
+
+  h2.heading-node {
+    margin-top: var(--h2-margin-top);
+    margin-bottom: var(--h2-margin-bottom);
+    font-size: var(--h2-font-size);
+  }
+
+  h3.heading-node {
+    margin-top: var(--h3-margin-top);
+    margin-bottom: var(--h3-margin-bottom);
+    font-size: var(--h3-font-size);
+  }
+
+  h4.heading-node {
+    margin-top: var(--h4-margin-top);
+    margin-bottom: var(--h4-margin-bottom);
+    font-size: var(--h4-font-size);
+  }
+
+  h5.heading-node {
+    margin-top: var(--h5-margin-top);
+    margin-bottom: var(--h5-margin-bottom);
+    font-size: var(--h5-font-size);
+  }
+
+  h6.heading-node {
+    margin-top: var(--h6-margin-top);
+    margin-bottom: var(--h6-margin-bottom);
+    font-size: var(--h6-font-size);
+  }
+
+  ul[data-type='taskList'] {
+    li {
+      > label {
+        flex: 0 0 auto;
+        margin-right: 0.5rem;
+        user-select: none;
+      }
+
+      > div {
+        :first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
