@@ -9,6 +9,8 @@ import FontFamily from '@tiptap/extension-font-family';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import Underline from '@tiptap/extension-underline';
+import Link from '@tiptap/extension-link';
+
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 
@@ -99,6 +101,38 @@ export const Editor = () => {
       //   HTMLAttributes: { class: 'image-node' },
       // }),
       ImageResize,
+      Link.configure({
+        HTMLAttributes: { class: 'link-node', target: '_blank' },
+        autolink: true,
+        openOnClick: false,
+        linkOnPaste: true,
+        defaultProtocol: 'https',
+        protocols: ['http', 'https'],
+        /**
+         * isAllowedUri
+         *
+         * 用于自定义链接验证逻辑，可以修改默认的验证规则，在链接被创建或粘贴前进行URL的合法性验证
+         * 使用场景：
+         *  - 需要限制特定协议的URL
+         *  - 需要验证域名白名单
+         *  - 需要阻止相对路径URL
+         *  - 需要自定义URL格式验证规则
+         */
+        isAllowedUri: (url, ctx) => {
+          return ctx.defaultValidate(url) && !url.startsWith('./');
+        },
+        /**
+         * shouldAutoLink
+         *
+         * 控制是否将已经通过验证的URL自动转换为链接，只有在URL已经通过isAllowedUri验证后才会被调用
+         * 只有在URL已经通过 isAllowedUri 验证后才会被调用（只负责控制是否将合法URL转换为链接）
+         * 使用场景：
+         *  - 需要根据URL特征决定是否自动创建链接
+         *  - 只想对某些特定类型的URL进行自动链接处理
+         *  - 需要对自动链接行为进行更精细的控制
+         */
+        shouldAutoLink: () => true,
+      }),
       TaskList.configure({
         HTMLAttributes: { class: 'task-list-node' },
       }),

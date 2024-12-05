@@ -22,12 +22,11 @@ import { FontFamilyButton } from './font-family-button';
 import { HeadingLevelButton } from './heading-level-button';
 import { TextColorButton } from './text-color-button';
 import { HighlightColorButton } from './highlight-color-button';
+import { LinkButton } from './link-button';
 
 export const Toolbar = () => {
   // const editor = useEditorStore(state => state.editor);
   const { editor } = useEditorStore();
-
-  console.log('Toolbar re-renderer');
 
   const sections: {
     label: string;
@@ -162,6 +161,7 @@ export const Toolbar = () => {
       <HeadingLevelButton />
       <TextColorButton />
       <HighlightColorButton />
+      <LinkButton />
       {sections[1].map(item => (
         <ToolbarButton key={item.label} {...item} />
       ))}

@@ -398,4 +398,12 @@ body {
     font-size: 0.85rem;
     padding: 0.25em 0.3em;
   }
+
+  .link-node {
+    @apply text-blue-500 cursor-pointer;
+
+    &:hover {
+      @apply text-blue-700 underline;
+    }
+  }
 }
