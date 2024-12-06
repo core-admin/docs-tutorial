@@ -23,6 +23,10 @@ import { HeadingLevelButton } from './heading-level-button';
 import { TextColorButton } from './text-color-button';
 import { HighlightColorButton } from './highlight-color-button';
 import { LinkButton } from './link-button';
+import { ImageButton } from './image-button';
+import { AlignButton } from './align-button';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { ListButton } from './list-button';
 
 export const Toolbar = () => {
   // const editor = useEditorStore(state => state.editor);
@@ -140,35 +144,64 @@ export const Toolbar = () => {
         isActive: false,
         onClick: () => {},
       },
-      {
-        label: '任务列表',
-        icon: ListTodoIcon,
-        isActive: editor?.isActive('taskList') ?? false,
-        onClick: () => {
-          editor?.chain().focus().toggleTaskList().run();
-        },
-      },
+      // {
+      //   label: '任务列表',
+      //   icon: ListTodoIcon,
+      //   isActive: editor?.isActive('taskList') ?? false,
+      //   onClick: () => {
+      //     editor?.chain().focus().toggleTaskList().run();
+      //   },
+      // },
     ],
   ];
 
   return (
-    <div className="bg-[#f1f4f9] px-2.5 py-0.5 rounded-3xl flex items-center gap-x-0.5 overflow-x-auto">
-      {sections[0].map(item => (
-        <ToolbarButton key={item.label} {...item} />
-      ))}
-      <Separator orientation="vertical" className="h-6 bg-neutral-300" />
-      <FontFamilyButton />
-      <HeadingLevelButton />
-      <TextColorButton />
-      <HighlightColorButton />
-      <LinkButton />
-      {sections[1].map(item => (
-        <ToolbarButton key={item.label} {...item} />
-      ))}
-      <Separator orientation="vertical" className="h-6 bg-neutral-300" />
-      {sections[2].map(item => (
-        <ToolbarButton key={item.label} {...item} />
-      ))}
+    <div className="bg-[#f1f4f9] px-2.5 py-0.5 rounded-3xl flex justify-center items-center gap-x-0.5 overflow-x-auto">
+      <TooltipProvider delayDuration={300}>
+        {sections[0].map(item => (
+          <ToolbarButton key={item.label} tooltipLabel={item.label} {...item}>
+            <item.icon className="size-4" />
+          </ToolbarButton>
+        ))}
+
+        <Separator orientation="vertical" className="h-5 bg-neutral-300 mx-1.5" />
+
+        <HeadingLevelButton />
+
+        <FontFamilyButton />
+
+        <TextColorButton />
+
+        <HighlightColorButton />
+
+        <Separator orientation="vertical" className="h-5 bg-neutral-300 mx-1.5" />
+
+        <LinkButton />
+
+        <ImageButton />
+
+        <Separator orientation="vertical" className="h-5 bg-neutral-300 mx-1.5" />
+
+        <AlignButton />
+
+        <ListButton />
+
+        <Separator orientation="vertical" className="h-5 bg-neutral-300 mx-1.5" />
+
+        {sections[1].map(item => (
+          <ToolbarButton key={item.label} tooltipLabel={item.label} {...item}>
+            <item.icon className="size-4" />
+          </ToolbarButton>
+        ))}
+
+        <Separator orientation="vertical" className="h-5 bg-neutral-300 mx-1.5" />
+
+        {sections[2].map(item => (
+          <ToolbarButton key={item.label} tooltipLabel={item.label} {...item}>
+            <item.icon className="size-4" />
+          </ToolbarButton>
+        ))}
+      </TooltipProvider>
     </div>
   );
 };

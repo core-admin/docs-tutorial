@@ -11,6 +11,8 @@ import Highlight from '@tiptap/extension-highlight';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
 
+import TextAlign from '@tiptap/extension-text-align';
+
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 
@@ -19,7 +21,7 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 
-// import Image from '@tiptap/extension-image';
+import Image from '@tiptap/extension-image';
 import ImageResize from 'tiptap-extension-resize-image';
 
 import { useEditorStore } from '@/store/use-editor-store';
@@ -56,6 +58,7 @@ export const Editor = () => {
     onContentError({ editor }) {
       setEditor(editor);
     },
+    autofocus: true,
     editorProps: {
       attributes: {
         class:
@@ -97,10 +100,14 @@ export const Editor = () => {
       FontFamily,
       TextStyle,
       Color,
-      // Image.configure({
+      Image.configure({
+        HTMLAttributes: { class: 'image-node' },
+        inline: false,
+      }),
+      // ImageResize.configure({
       //   HTMLAttributes: { class: 'image-node' },
+      //   inline: false,
       // }),
-      ImageResize,
       Link.configure({
         HTMLAttributes: { class: 'link-node', target: '_blank' },
         autolink: true,
@@ -132,6 +139,10 @@ export const Editor = () => {
          *  - 需要对自动链接行为进行更精细的控制
          */
         shouldAutoLink: () => true,
+      }),
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+        defaultAlignment: 'left',
       }),
       TaskList.configure({
         HTMLAttributes: { class: 'task-list-node' },

@@ -1,6 +1,7 @@
 import { useEditorStore } from '@/store/use-editor-store';
 import { type ColorResult, SketchPicker } from 'react-color';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { ToolbarButton } from './toolbar-button';
 
 const presetColors = [
   'rgb(0, 0, 0)',
@@ -91,22 +92,22 @@ export const TextColorButton = () => {
   };
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm focus:outline-none">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <ToolbarButton tooltipLabel="字体颜色" className="flex-col px-1.5">
           <span className="text-xs">A</span>
           <div className="h-0.5 w-full" style={{ backgroundColor: value }}></div>
-        </button>
-      </PopoverTrigger>
+        </ToolbarButton>
+      </DropdownMenuTrigger>
 
-      <PopoverContent className="p-2.5 w-[256px]">
+      <DropdownMenuContent onCloseAutoFocus={e => e.preventDefault()} className="p-2.5 w-[256px]">
         <SketchPicker
           className="!w-full !shadow-none !p-0"
           color={value}
           onChange={onChange}
           presetColors={presetColors}
         />
-      </PopoverContent>
-    </Popover>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };

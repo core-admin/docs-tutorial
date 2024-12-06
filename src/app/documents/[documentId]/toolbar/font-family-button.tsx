@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ChevronDownIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ToolbarButton } from './toolbar-button';
 
 export const FontFamilyButton = () => {
   const { editor } = useEditorStore();
@@ -22,13 +23,13 @@ export const FontFamilyButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 w-[120px] shrink-0 flex items-center justify-between rounded-sm px-1.5 overflow-hidden text-sm focus:outline-none">
+        <ToolbarButton tooltipLabel="字体" className="min-w-[80px] px-1.5">
           <span className="truncate">{editor?.getAttributes('textStyle').fontFamily || 'Arial'}</span>
           <ChevronDownIcon className="size-4 ml-2 shrink-0" />
-        </button>
+        </ToolbarButton>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent>
+      <DropdownMenuContent onCloseAutoFocus={e => e.preventDefault()}>
         {fonts.map(font => (
           <DropdownMenuItem
             key={font.value}
