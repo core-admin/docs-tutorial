@@ -24,6 +24,9 @@ import TableRow from '@tiptap/extension-table-row';
 import Image from '@tiptap/extension-image';
 import ImageResize from 'tiptap-extension-resize-image';
 
+import { FontSizeExtension } from '@/extensions/font-size';
+import { LineHeightExtension } from '@/extensions/line-height';
+
 import { useEditorStore } from '@/store/use-editor-store';
 
 export const Editor = () => {
@@ -71,37 +74,45 @@ export const Editor = () => {
     extensions: [
       StarterKit.configure({
         paragraph: {
-          HTMLAttributes: { class: 'paragraph-node' },
+          HTMLAttributes: { class: 'paragraph-node', 'data-type': 'paragraph' },
         },
         bulletList: {
-          HTMLAttributes: { class: 'bullet-node111' },
+          HTMLAttributes: { class: 'bullet-node', 'data-type': 'bulletList' },
         },
         listItem: {
-          HTMLAttributes: { class: 'list-item-node' },
+          HTMLAttributes: { class: 'list-item-node', 'data-type': 'listItem' },
         },
         heading: {
           levels: [1, 2, 3, 4, 5, 6],
-          HTMLAttributes: { class: 'heading-node' },
+          HTMLAttributes: { class: 'heading-node', 'data-type': 'heading' },
         },
         code: {
-          HTMLAttributes: { class: 'code-node' },
+          HTMLAttributes: { class: 'code-node', 'data-type': 'code' },
         },
+      }),
+      FontSizeExtension.configure({
+        types: ['textStyle'],
+        disallowedNodes: ['heading'], // 配置不允许设置字体大小的节点
+      }),
+      LineHeightExtension.configure({
+        types: ['paragraph', 'heading'],
+        defaultLineHeight: 'inherit',
       }),
       Placeholder.configure({
         placeholder: 'Write something ...',
       }),
       Underline.configure({
-        HTMLAttributes: { class: 'underline-node' },
+        HTMLAttributes: { class: 'underline-node', 'data-type': 'underline' },
       }),
       Highlight.configure({
-        HTMLAttributes: { class: 'highlight-node' },
+        HTMLAttributes: { class: 'highlight-node', 'data-type': 'highlight' },
         multicolor: true,
       }),
       FontFamily,
       TextStyle,
       Color,
       Image.configure({
-        HTMLAttributes: { class: 'image-node' },
+        HTMLAttributes: { class: 'image-node', 'data-type': 'image' },
         inline: false,
       }),
       // ImageResize.configure({
@@ -109,7 +120,7 @@ export const Editor = () => {
       //   inline: false,
       // }),
       Link.configure({
-        HTMLAttributes: { class: 'link-node', target: '_blank' },
+        HTMLAttributes: { class: 'link-node', target: '_blank', 'data-type': 'link' },
         autolink: true,
         openOnClick: false,
         linkOnPaste: true,
@@ -145,25 +156,25 @@ export const Editor = () => {
         defaultAlignment: 'left',
       }),
       TaskList.configure({
-        HTMLAttributes: { class: 'task-list-node' },
+        HTMLAttributes: { class: 'task-list-node', 'data-type': 'taskList' },
       }),
       TaskItem.configure({
         nested: true,
-        HTMLAttributes: { class: 'task-item-node' },
+        HTMLAttributes: { class: 'task-item-node', 'data-type': 'taskItem' },
       }),
 
       Table.configure({
-        HTMLAttributes: { class: 'table-node' },
+        HTMLAttributes: { class: 'table-node', 'data-type': 'table' },
         resizable: true,
       }),
       TableCell.configure({
-        HTMLAttributes: { class: 'table-cell-node' },
+        HTMLAttributes: { class: 'table-cell-node', 'data-type': 'tableCell' },
       }),
       TableHeader.configure({
-        HTMLAttributes: { class: 'table-header-node' },
+        HTMLAttributes: { class: 'table-header-node', 'data-type': 'tableHeader' },
       }),
       TableRow.configure({
-        HTMLAttributes: { class: 'table-row-node' },
+        HTMLAttributes: { class: 'table-row-node', 'data-type': 'tableRow' },
       }),
     ],
     content: ``,

@@ -27,6 +27,8 @@ import { ImageButton } from './image-button';
 import { AlignButton } from './align-button';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ListButton } from './list-button';
+import { FontSzeButton } from './font-size-button';
+import { LineHeightButton } from './line-height-button';
 
 export const Toolbar = () => {
   // const editor = useEditorStore(state => state.editor);
@@ -168,6 +170,8 @@ export const Toolbar = () => {
 
         <HeadingLevelButton />
 
+        <FontSzeButton />
+
         <FontFamilyButton />
 
         <TextColorButton />
@@ -185,6 +189,8 @@ export const Toolbar = () => {
         <AlignButton />
 
         <ListButton />
+
+        <LineHeightButton />
 
         <Separator orientation="vertical" className="h-5 bg-neutral-300 mx-1.5" />
 

@@ -8,6 +8,7 @@ import {
 import { ChevronDownIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ToolbarButton } from './toolbar-button';
+import { ChainedCommands } from '@tiptap/core';
 
 export const HeadingLevelButton = () => {
   const { editor } = useEditorStore();
@@ -33,6 +34,10 @@ export const HeadingLevelButton = () => {
 
   const currentHeadingLevel = getCurrentHeadingLevel();
 
+  const resetFn = (chainCommands: ChainedCommands) => {
+    return chainCommands.unsetFontSize().unsetLineHeight();
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -49,17 +54,13 @@ export const HeadingLevelButton = () => {
             className={cn('focus:outline-none cursor-pointer', index === currentHeadingLevel && 'bg-accent')}
             style={{ fontSize: heading.styleSize ?? heading.fontSize, lineHeight: 1.2, height: 'auto' }}
             onSelect={() => {
-              if (index === currentHeadingLevel) {
-                return;
-              }
+              const chainCommands = editor?.chain();
               if (index === 0) {
-                editor?.chain().focus().setParagraph().run();
+                chainCommands?.focus().setParagraph().unsetFontSize();
+                resetFn(chainCommands!).run();
               } else {
-                editor
-                  ?.chain()
-                  .focus()
-                  .setHeading({ level: heading.value as any })
-                  .run();
+                chainCommands?.focus().setHeading({ level: heading.value as any });
+                resetFn(chainCommands!).run();
               }
             }}
           >
