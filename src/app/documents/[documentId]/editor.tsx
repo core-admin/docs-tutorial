@@ -26,6 +26,7 @@ import ImageResize from 'tiptap-extension-resize-image';
 
 import { FontSizeExtension } from '@/extensions/font-size';
 import { LineHeightExtension } from '@/extensions/line-height';
+import { ClearFormattingShortcut } from '@/extensions/shortcuts/clear-formatting';
 
 import { useEditorStore } from '@/store/use-editor-store';
 import { Ruler } from './ruler';
@@ -91,6 +92,7 @@ export const Editor = () => {
           HTMLAttributes: { class: 'code-node', 'data-type': 'code' },
         },
       }),
+      ClearFormattingShortcut,
       FontSizeExtension.configure({
         types: ['textStyle'],
         disallowedNodes: ['heading'], // 配置不允许设置字体大小的节点
