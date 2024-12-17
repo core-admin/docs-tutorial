@@ -3,9 +3,30 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import { templates } from '@/constants/tempaltes';
 import { cn } from '@/lib/utils';
+import { useMutation } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
+import { memo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export const TemplatesGallery = () => {
-  const isCreating = false;
+const TemplatesGallery = () => {
+  const router = useRouter();
+  const create = useMutation(api.documents.create);
+  const [isCreating, setIsCreating] = useState(false);
+
+  const onTemplateClick = (title: string, initialContent: string) => {
+    setIsCreating(true);
+    create({
+      title,
+      initialContent,
+    })
+      .then(docId => {
+        router.push(`/documents/${docId}`);
+      })
+      .catch(error => {
+        console.error(error);
+        setIsCreating(false);
+      });
+  };
 
   return (
     <div className="bg-[#f1f3f4]">
@@ -34,7 +55,8 @@ export const TemplatesGallery = () => {
                       }}
                       className="size-full rounded-sm border hover:border-blue-500 hover:bg-blue-50 transition flex flex-col items-center justify-center gap-y-4 bg-white"
                       disabled={isCreating}
-                      onClick={() => {}}
+                      // TODO: 初始化内容未完善
+                      onClick={() => onTemplateClick(template.label, '')}
                     />
                     <p className="text-sm font-medium truncate">{template.label}</p>
                   </div>
@@ -49,3 +71,5 @@ export const TemplatesGallery = () => {
     </div>
   );
 };
+
+export default memo(TemplatesGallery);

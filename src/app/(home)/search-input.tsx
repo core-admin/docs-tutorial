@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SearchIcon, XIcon } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useReducer, useEffect } from 'react';
 import { useSearchParam } from '@/hooks/use-search-param';
 
 export const SearchInput = () => {
