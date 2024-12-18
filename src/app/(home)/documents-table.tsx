@@ -15,8 +15,6 @@ interface DocumentsTableProps {
 }
 
 export const DocumentsTable = ({ documents, status, isLoading, loadMore }: DocumentsTableProps) => {
-  console.log('status', status, documents);
-
   const renderFooterText = () => {
     if (status === 'CanLoadMore' && documents.length === 10) {
       return '加载更多';

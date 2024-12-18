@@ -49,6 +49,8 @@ export const get = query({
       throw new ConvexError('未经授权');
     }
 
+    console.log('user >>>', user);
+
     /**
      * 搜索逻辑：
      * 1. 如果提供了search参数，使用search_title索引进行标题搜索
