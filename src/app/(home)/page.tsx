@@ -2,27 +2,22 @@
 
 import { Navbar } from './navbar';
 import TemplatesGallery from './templates-gallery';
-import { useQuery } from 'convex/react';
+import { usePaginatedQuery, useQuery } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
 import { useEffect } from 'react';
 import { useStablePaginatedQuery } from '@/hooks/use-stable-paginated-query';
 import { DocumentsTable } from './documents-table';
+import { useSearchParam } from '@/hooks/use-search-param';
 
 const Home = () => {
+  const [search] = useSearchParam();
+
   const {
     results: documents,
     status,
     loadMore,
     isLoading,
-  } = useStablePaginatedQuery(
-    api.documents.get,
-    {
-      paginationOpts: {
-        numItems: 10,
-      },
-    },
-    { initialNumItems: 10 },
-  );
+  } = useStablePaginatedQuery(api.documents.get, { search }, { initialNumItems: 10 });
 
   return (
     <div className="min-h-screen flex flex-col">

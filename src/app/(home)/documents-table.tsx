@@ -15,6 +15,19 @@ interface DocumentsTableProps {
 }
 
 export const DocumentsTable = ({ documents, status, isLoading, loadMore }: DocumentsTableProps) => {
+  console.log('status', status, documents);
+
+  const renderFooterText = () => {
+    if (status === 'CanLoadMore' && documents.length === 10) {
+      return '加载更多';
+    } else if (status === 'LoadingMore') {
+      return '正在加载';
+    } else if (status === 'Exhausted') {
+      return '没有更多了';
+    }
+    return null;
+  };
+
   return (
     <div className="max-w-screen-xl mx-auto px-16 py-6 flex flex-col gap-5">
       {isLoading ? (
@@ -47,6 +60,14 @@ export const DocumentsTable = ({ documents, status, isLoading, loadMore }: Docum
             </TableBody>
           )}
         </Table>
+      )}
+
+      {!isLoading && documents.length !== 0 && (
+        <div className="flex items-center justify-center">
+          <Button variant="ghost" size="sm" disabled={status !== 'CanLoadMore'} onClick={() => loadMore(10)}>
+            {renderFooterText()}
+          </Button>
+        </div>
       )}
     </div>
   );

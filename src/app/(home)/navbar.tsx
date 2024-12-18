@@ -5,16 +5,15 @@ import { UserButton } from '@clerk/nextjs';
 
 export const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between h-full w-full p-4">
-      <div className="flex gap-3 items-center shrink-0 pr-6">
+    <nav className="flex items-center justify-between h-full w-full p-4 gap-6">
+      <div className="flex flex-col items-center shrink-0 sm:flex-row sm:gap-3">
         <Link href="/">
           <Image src="/logo.svg" alt="logo" width={36} height={36} />
         </Link>
-        <h3 className="text-xl">Docs</h3>
+        <h3 className="text-sm sm:text-xl">Docs</h3>
       </div>
       <SearchInput />
       <UserButton />
-      <div />
     </nav>
   );
 };

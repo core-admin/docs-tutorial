@@ -10,21 +10,19 @@ export const DocumentRow = ({ document }: { document: Doc<'documents'> }) => {
   const router = useRouter();
 
   return (
-    // <TableRow className="hover:bg-transparent">
-    //   <TableCell colSpan={2}>{document.title}</TableCell>
-    //   <TableCell colSpan={2}>
-    //     <Button variant="outline" size="icon">
-    //       <ShareIcon className="size-4" />
-    //     </Button>
-    //   </TableCell>
-    //   <TableCell>{new Date(document._creationTime).toLocaleString()}</TableCell>
-    // </TableRow>
-
-    <TableRow className="cursor-pointer" onClick={() => router.push(`/documents/${document._id}`)}>
-      <TableCell className="w-[50px]">
-        <SiGoogledocs className="size-6 fill-blue-500" />
+    <TableRow>
+      <TableCell colSpan={2} className="md:w-[45%]">
+        <div
+          className="flex items-center gap-4 cursor-pointer group"
+          onClick={() => {
+            router.push(`/documents/${document._id}`);
+          }}
+        >
+          <SiGoogledocs className="size-6 fill-blue-500 flex-shrink-0" />
+          <span className="font-medium transition-colors group-hover:text-blue-500">{document.title}</span>
+        </div>
       </TableCell>
-      <TableCell className="font-medium md:w-[45%]">{document.title}</TableCell>
+      {/* <TableCell className="font-medium md:w-[50%]">{document.title}</TableCell> */}
       <TableCell className="text-muted-foreground hidden md:flex items-center gap-2">
         {document.organizationId ? <Building2Icon className="size-4" /> : <CircleUserIcon className="size-4" />}
         {document.organizationId ? '组织' : '个人'}

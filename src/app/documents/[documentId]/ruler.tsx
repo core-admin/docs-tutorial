@@ -167,7 +167,7 @@ const Marker = ({ position, isLeft, isDragging, onMouseDown, onDoubleClick }: Ma
     >
       <FaCaretDown className="absolute left-1/2 top-0 h-full fill-blue-500 transform -translate-x-1/2" />
       <div
-        className="absolute left-1/2 top-4 w-px h-screen"
+        className="absolute left-1/2 top-4 w-px h-[calc(100vh_-_120px)]"
         style={{
           transform: 'translateX(-50%) scaleX(0.5)',
           backgroundColor: '#3b72f6',
