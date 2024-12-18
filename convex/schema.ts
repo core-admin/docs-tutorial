@@ -19,6 +19,7 @@ export default defineSchema({
     organizationId: v.optional(v.string()),
   })
     .index('by_owner_id', ['ownerId'])
+    .index('by_owner_and_org', ['ownerId', 'organizationId'])
     .index('by_organization_id', ['organizationId'])
     .searchIndex('search_title', {
       // 指定要搜索的字段

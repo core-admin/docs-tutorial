@@ -20,10 +20,14 @@ export const create = mutation({
     if (!user) {
       throw new ConvexError('未经授权');
     }
+
+    const organizationId = (user.organizationId ?? undefined) as string | undefined;
+
     return await ctx.db.insert('documents', {
       title: args.title ?? '无标题文档',
       initialContent: args.initialContent ?? '',
       ownerId: user.subject,
+      organizationId,
     });
   },
 });
@@ -49,7 +53,7 @@ export const get = query({
       throw new ConvexError('未经授权');
     }
 
-    console.log('user >>>', user);
+    const organizationId = (user.organizationId ?? undefined) as string | undefined;
 
     /**
      * 搜索逻辑：
@@ -68,22 +72,51 @@ export const get = query({
       //   .paginate(paginationOpts);
     }
 
-    if (search) {
+    // TODO: https://github.com/get-convex/convex-helpers/issues/381
+
+    // 存关键字和组织id，通过组织id索引查询，然后过滤
+    if (search && organizationId) {
       return await filter(
-        ctx.db.query('documents').withIndex('by_owner_id', q => q.eq('ownerId', user.subject)),
+        ctx.db.query('documents').withIndex('by_organization_id', q => {
+          return q.eq('organizationId', organizationId);
+        }),
         document => document.title.includes(search),
       )
         .order('desc')
         .paginate(paginationOpts);
     }
 
-    /**
-     * 默认查询：
-     * 使用by_owner_id索引获取当前用户的所有文档
-     */
+    // 存关键字，通过ownerId索引查询，然后过滤
+    if (search) {
+      return await filter(
+        ctx.db.query('documents').withIndex('by_owner_id', q => {
+          return q.eq('ownerId', user.subject);
+        }),
+        document => {
+          return document.title.includes(search);
+        },
+      )
+        .order('desc')
+        .paginate(paginationOpts);
+    }
+
+    // 存组织id，通过组织id索引查询
+    if (organizationId) {
+      return await ctx.db
+        .query('documents')
+        .withIndex('by_organization_id', q => {
+          return q.eq('organizationId', organizationId);
+        })
+        .order('desc')
+        .paginate(paginationOpts);
+    }
+
+    // 默认查询：存ownerId，通过ownerId索引查询
     return await ctx.db
       .query('documents')
-      .withIndex('by_owner_id', q => q.eq('ownerId', user.subject))
+      .withIndex('by_owner_id', q => {
+        return q.eq('ownerId', user.subject);
+      })
       .order('desc')
       .paginate(paginationOpts);
   },

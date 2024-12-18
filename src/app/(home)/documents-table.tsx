@@ -4,19 +4,23 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { LoaderIcon, ShareIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DocumentRow } from './document-row';
+import { useMemo } from 'react';
 
 type PaginatedQueryResult = UsePaginatedQueryResult<Doc<'documents'>>;
 
 interface DocumentsTableProps {
   documents: PaginatedQueryResult['results'];
-  loadMore: PaginatedQueryResult['loadMore'];
+  // loadMore: PaginatedQueryResult['loadMore'];
+  loadMore: () => void;
   status: PaginationStatus;
   isLoading: boolean;
 }
 
 export const DocumentsTable = ({ documents, status, isLoading, loadMore }: DocumentsTableProps) => {
-  const renderFooterText = () => {
-    if (status === 'CanLoadMore' && documents.length === 10) {
+  const loadText = useMemo(() => {
+    if (status === 'CanLoadMore' && documents.length < 10) {
+      return '没有更多了';
+    } else if (status === 'CanLoadMore') {
       return '加载更多';
     } else if (status === 'LoadingMore') {
       return '正在加载';
@@ -24,7 +28,9 @@ export const DocumentsTable = ({ documents, status, isLoading, loadMore }: Docum
       return '没有更多了';
     }
     return null;
-  };
+  }, [status, documents]);
+
+  const isMoreData = loadText !== null || loadText !== '没有更多了';
 
   return (
     <div className="max-w-screen-xl mx-auto px-16 py-6 flex flex-col gap-5">
@@ -62,8 +68,9 @@ export const DocumentsTable = ({ documents, status, isLoading, loadMore }: Docum
 
       {!isLoading && documents.length !== 0 && (
         <div className="flex items-center justify-center">
-          <Button variant="ghost" size="sm" disabled={status !== 'CanLoadMore'} onClick={() => loadMore(10)}>
-            {renderFooterText()}
+          {/* TODO: 添加禁用样式 */}
+          <Button variant="ghost" size="sm" disabled={!isMoreData} onClick={() => loadMore()}>
+            {loadText}
           </Button>
         </div>
       )}
