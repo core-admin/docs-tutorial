@@ -143,8 +143,8 @@ export const Toolbar = () => {
       {
         label: '评论',
         icon: MessageSquarePlusIcon,
-        isActive: false,
-        onClick: () => {},
+        isActive: editor?.isActive('pendingComment') ?? false,
+        onClick: () => editor?.chain().focus().addPendingComment().run(),
       },
       // {
       //   label: '任务列表',

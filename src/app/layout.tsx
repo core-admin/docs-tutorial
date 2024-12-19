@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import './globals.scss';
+import '@/styles';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { ConvexClientProvider } from '@/components/convex-client-provider';
 import { Toaster } from 'sonner';

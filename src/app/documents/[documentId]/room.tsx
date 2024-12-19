@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import { LiveblocksProvider, RoomProvider, ClientSideSuspense } from '@liveblocks/react/suspense';
 import { useParams } from 'next/navigation';
+import FullscreenLoader from '@/components/fullscreen-loader';
 
 export function Room({ children }: { children: ReactNode }) {
   const params = useParams();
@@ -10,7 +11,7 @@ export function Room({ children }: { children: ReactNode }) {
   return (
     <LiveblocksProvider publicApiKey={process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_API_KEY!}>
       <RoomProvider id={params.documentId as string}>
-        <ClientSideSuspense fallback={<div>Loading…</div>}>{children}</ClientSideSuspense>
+        <ClientSideSuspense fallback={<FullscreenLoader label="应用加载中..." />}>{children}</ClientSideSuspense>
       </RoomProvider>
     </LiveblocksProvider>
   );
