@@ -30,8 +30,10 @@ import { ClearFormattingShortcut } from '@/extensions/shortcuts/clear-formatting
 
 import { useEditorStore } from '@/store/use-editor-store';
 import { Ruler } from './ruler';
+import { useLiveblocksExtension } from '@liveblocks/react-tiptap';
 
 export const Editor = () => {
+  const liveblocks = useLiveblocksExtension();
   const { setEditor } = useEditorStore();
 
   const editor = useEditor({
@@ -74,7 +76,11 @@ export const Editor = () => {
     },
     immediatelyRender: false,
     extensions: [
+      // https://liveblocks.io/dashboard/TS5EjaZyyMqyWcCV1WFXF/projects/6763e7c2ac9ac9672c468e15/quickstart
+      liveblocks,
       StarterKit.configure({
+        // Liveblocks 扩展自带历史记录处理功能
+        history: false,
         paragraph: {
           HTMLAttributes: { class: 'paragraph-node', 'data-type': 'paragraph' },
         },
