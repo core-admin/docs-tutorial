@@ -16,7 +16,7 @@ import { api } from '../../convex/_generated/api';
 import { useMutation } from 'convex/react';
 import { useState } from 'react';
 // import { useToast } from '@/hooks/use-toast';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 
 interface RemoveDialogProps {
   documentId: Id<'documents'>;
