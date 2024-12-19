@@ -7,6 +7,7 @@ import { useMutation } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
 import { memo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const TemplatesGallery = () => {
   const router = useRouter();
@@ -20,10 +21,12 @@ const TemplatesGallery = () => {
       initialContent,
     })
       .then(docId => {
+        toast.success('文档已创建');
         router.push(`/documents/${docId}`);
       })
       .catch(error => {
         console.error(error);
+        toast.error(error.data || error.message || '创建文档失败');
         setIsCreating(false);
       });
   };

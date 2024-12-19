@@ -15,6 +15,8 @@ import { Id } from '../../convex/_generated/dataModel';
 import { api } from '../../convex/_generated/api';
 import { useMutation } from 'convex/react';
 import { useState } from 'react';
+// import { useToast } from '@/hooks/use-toast';
+import { Toaster, toast } from 'sonner';
 
 interface RemoveDialogProps {
   documentId: Id<'documents'>;
@@ -29,9 +31,16 @@ export const RemoveDialog = ({ documentId, children, onOpenChange }: RemoveDialo
 
   const handleRemove = async () => {
     setIsRemoving(true);
-    remove({ id: documentId }).finally(() => {
-      setIsRemoving(false);
-    });
+    remove({ id: documentId })
+      .then(() => {
+        toast.success('文档已删除');
+      })
+      .catch(e => {
+        toast.error(e.data || e.message || '删除失败');
+      })
+      .finally(() => {
+        setIsRemoving(false);
+      });
   };
 
   const handleOpenChange = (open: boolean) => {

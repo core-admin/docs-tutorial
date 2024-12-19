@@ -5,22 +5,18 @@ import { SiGoogledocs } from 'react-icons/si';
 import { format } from 'date-fns';
 import { DocumentMenu } from './document-menu';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export const DocumentRow = ({ document }: { document: Doc<'documents'> }) => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <TableRow>
       <TableCell colSpan={2} className="md:w-[45%]">
-        <div
-          className="flex items-center gap-4 cursor-pointer group"
-          onClick={() => {
-            router.push(`/documents/${document._id}`);
-          }}
-        >
+        <Link href={`/documents/${document._id}`} className="flex items-center gap-4 cursor-pointer group">
           <SiGoogledocs className="size-6 fill-blue-500 flex-shrink-0" />
           <span className="font-medium transition-colors group-hover:text-blue-500">{document.title}</span>
-        </div>
+        </Link>
       </TableCell>
       {/* <TableCell className="font-medium md:w-[50%]">{document.title}</TableCell> */}
       <TableCell className="text-muted-foreground hidden md:flex items-center gap-2">

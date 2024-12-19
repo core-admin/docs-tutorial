@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { ErrorMessage } from './error-message';
+import { toast } from 'sonner';
 
 interface RenameDialogProps {
   documentId: Id<'documents'>;
@@ -53,6 +54,10 @@ export const RenameDialog = ({ documentId, initialTitle, children, onOpenChange 
     update({ id: documentId, title: title.trim() })
       .then(() => {
         handleOpenChange(false);
+        toast.success('文档已重命名');
+      })
+      .catch(e => {
+        toast.error(e.data || e.message || '重命名失败');
       })
       .finally(() => {
         setIsUpdating(false);

@@ -40,6 +40,22 @@ import {
 import { BsFilePdf } from 'react-icons/bs';
 import { usePlatform } from '@/hooks/use-platform';
 import { useEditorStore } from '@/store/use-editor-store';
+import { UserButton, OrganizationSwitcher } from '@clerk/nextjs';
+import { memo } from 'react';
+
+const RightUserAction = () => (
+  <div className="flex gap-3 items-center">
+    <OrganizationSwitcher
+      afterCreateOrganizationUrl="/"
+      afterLeaveOrganizationUrl="/"
+      afterSelectOrganizationUrl="/"
+      afterSelectPersonalUrl="/"
+    />
+    <UserButton />
+  </div>
+);
+
+const MemoRightUserAction = memo(RightUserAction);
 
 export const Navbar = () => {
   const platform = usePlatform();
@@ -226,6 +242,7 @@ export const Navbar = () => {
           </div>
         </div>
       </div>
+      {/* <MemoRightUserAction /> */}
     </nav>
   );
 };

@@ -18,6 +18,7 @@ export const create = mutation({
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
     if (!user) {
+      // @docs https://docs.convex.dev/functions/error-handling/application-errors
       throw new ConvexError('未经授权');
     }
 
@@ -142,8 +143,11 @@ export const removeById = mutation({
       throw new ConvexError('文档不存在');
     }
 
-    if (document.ownerId !== user.subject) {
-      throw new ConvexError('未经授权');
+    const isOwner = document.ownerId === user.subject;
+    const isOrganizationMember = user.organizationId === document.organizationId;
+
+    if (!isOwner && !isOrganizationMember) {
+      throw new ConvexError('您没有权限删除此文档');
     }
 
     return await ctx.db.delete(args.id);
@@ -172,8 +176,11 @@ export const updateById = mutation({
       throw new ConvexError('文档不存在');
     }
 
-    if (document.ownerId !== user.subject) {
-      throw new ConvexError('未经授权');
+    const isOwner = document.ownerId === user.subject;
+    const isOrganizationMember = user.organizationId === document.organizationId;
+
+    if (!isOwner && !isOrganizationMember) {
+      throw new ConvexError('您没有权限修改此文档');
     }
 
     return await ctx.db.patch(args.id, {

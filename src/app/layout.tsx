@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.scss';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { ConvexClientProvider } from '@/components/convex-client-provider';
+import { Toaster } from 'sonner';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -31,6 +32,7 @@ export default function RootLayout({
         <NuqsAdapter>
           <ConvexClientProvider>{children}</ConvexClientProvider>
         </NuqsAdapter>
+        <Toaster richColors />
       </body>
     </html>
   );
