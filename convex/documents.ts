@@ -19,7 +19,7 @@ export const create = mutation({
     const user = await ctx.auth.getUserIdentity();
     if (!user) {
       // @docs https://docs.convex.dev/functions/error-handling/application-errors
-      throw new ConvexError('未经授权');
+      throw new ConvexError('无权限访问');
     }
 
     const organizationId = (user.organizationId ?? undefined) as string | undefined;
@@ -51,7 +51,7 @@ export const get = query({
 
     const user = await ctx.auth.getUserIdentity();
     if (!user) {
-      throw new ConvexError('未经授权');
+      throw new ConvexError('无权限访问');
     }
 
     const organizationId = (user.organizationId ?? undefined) as string | undefined;
@@ -135,7 +135,7 @@ export const removeById = mutation({
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
     if (!user) {
-      throw new ConvexError('未经授权');
+      throw new ConvexError('无权限访问');
     }
 
     const document = await ctx.db.get(args.id);
@@ -168,7 +168,7 @@ export const updateById = mutation({
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
     if (!user) {
-      throw new ConvexError('未经授权');
+      throw new ConvexError('无权限访问');
     }
 
     const document = await ctx.db.get(args.id);
@@ -187,4 +187,11 @@ export const updateById = mutation({
       title: args.title,
     });
   },
+});
+
+export const getById = query({
+  args: {
+    id: v.id('documents'),
+  },
+  handler: (ctx, args) => ctx.db.get(args.id),
 });

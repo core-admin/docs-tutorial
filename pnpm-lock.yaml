@@ -20,6 +20,9 @@ importers:
       '@liveblocks/client':
         specifier: ^2.14.0
         version: 2.14.0
+      '@liveblocks/node':
+        specifier: ^2.14.0
+        version: 2.14.0
       '@liveblocks/react':
         specifier: ^2.14.0
         version: 2.14.0(react@19.0.0)
@@ -670,6 +673,9 @@ packages:
 
   '@liveblocks/core@2.14.0':
     resolution: {integrity: sha512-MbciLE8HprTaYxY5H0jq3VbUS1qLno8oEYvP63y/S3IWsSe0l61VlkDQdHcyhPzpjmYNSpN2rr5VhPDADsIRaA==}
+
+  '@liveblocks/node@2.14.0':
+    resolution: {integrity: sha512-bUg1ekCBLlu2AFd4yzNuyCJSIcdIqmuaLDnTyspUhdJMoBiS8xyhk7fICsEFNyywcIXVERPiII0ngaFp9Uff6A==}
 
   '@liveblocks/react-tiptap@2.14.0':
     resolution: {integrity: sha512-Due2qCK/r9bgk9LMseohCVlgodheEcMRjxC2MtIZOoDozBpkRgWEhcZqakaxXy1dEWQ5hdwbsuSEFfJckbltKw==}
@@ -1560,6 +1566,9 @@ packages:
 
   '@rushstack/eslint-patch@1.10.4':
     resolution: {integrity: sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==}
+
+  '@stablelib/base64@1.0.1':
+    resolution: {integrity: sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ==}
 
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
@@ -2493,6 +2502,9 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
+  fast-sha256@1.3.0:
+    resolution: {integrity: sha512-n11RGP/lrWEFI/bWdygLxhI+pVeo1ZYIVwvvPkW7azl/rOy+F3HYRZ2K5zeE9mmkhQppyv9sQFx0JM9UabnpPQ==}
+
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
@@ -2984,6 +2996,15 @@ packages:
 
   no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
+
+  node-fetch@2.7.0:
+    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -3630,6 +3651,9 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
+  tr46@0.0.3:
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+
   ts-api-utils@1.4.3:
     resolution: {integrity: sha512-i3eMG77UTMD0hZhgRS562pv83RC6ukSAC2GMNWc+9dieh/+jDM5u5YG+NHX6VNDRHQcHwmsTHctP9LhbC3WxVw==}
     engines: {node: '>=16'}
@@ -3732,6 +3756,12 @@ packages:
 
   w3c-keyname@2.2.8:
     resolution: {integrity: sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ==}
+
+  webidl-conversions@3.0.1:
+    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+
+  whatwg-url@5.0.0:
+    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
 
   which-boxed-primitive@1.1.0:
     resolution: {integrity: sha512-Ei7Miu/AXe2JJ4iNF5j/UphAgRoma4trE6PtisM09bPygb3egMH3YLW/befsWb1A1AxvNSFidOFTB18XtnIIng==}
@@ -4130,6 +4160,15 @@ snapshots:
       '@liveblocks/core': 2.14.0
 
   '@liveblocks/core@2.14.0': {}
+
+  '@liveblocks/node@2.14.0':
+    dependencies:
+      '@liveblocks/core': 2.14.0
+      '@stablelib/base64': 1.0.1
+      fast-sha256: 1.3.0
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
 
   '@liveblocks/react-tiptap@2.14.0(@tiptap/extension-collaboration-cursor@2.10.3(@tiptap/core@2.10.3(@tiptap/pm@2.10.3))(y-prosemirror@1.2.15(prosemirror-model@1.24.0)(prosemirror-state@1.4.3)(prosemirror-view@1.37.0)(y-protocols@1.0.6(yjs@13.6.20))(yjs@13.6.20)))(@tiptap/extension-collaboration@2.10.3(@tiptap/core@2.10.3(@tiptap/pm@2.10.3))(@tiptap/pm@2.10.3)(y-prosemirror@1.2.15(prosemirror-model@1.24.0)(prosemirror-state@1.4.3)(prosemirror-view@1.37.0)(y-protocols@1.0.6(yjs@13.6.20))(yjs@13.6.20)))(@tiptap/pm@2.10.3)(@tiptap/react@2.10.3(@tiptap/core@2.10.3(@tiptap/pm@2.10.3))(@tiptap/pm@2.10.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tiptap/suggestion@2.10.3(@tiptap/core@2.10.3(@tiptap/pm@2.10.3))(@tiptap/pm@2.10.3))(@types/react-dom@18.3.1)(@types/react@18.3.12)(prosemirror-model@1.24.0)(prosemirror-state@1.4.3)(prosemirror-view@1.37.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(y-protocols@1.0.6(yjs@13.6.20))':
     dependencies:
@@ -5064,6 +5103,8 @@ snapshots:
   '@rtsao/scc@1.1.0': {}
 
   '@rushstack/eslint-patch@1.10.4': {}
+
+  '@stablelib/base64@1.0.1': {}
 
   '@swc/counter@0.1.3': {}
 
@@ -6183,6 +6224,8 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
+  fast-sha256@1.3.0: {}
+
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
@@ -6661,6 +6704,10 @@ snapshots:
     dependencies:
       lower-case: 2.0.2
       tslib: 2.8.1
+
+  node-fetch@2.7.0:
+    dependencies:
+      whatwg-url: 5.0.0
 
   normalize-path@3.0.0: {}
 
@@ -7411,6 +7458,8 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
+  tr46@0.0.3: {}
+
   ts-api-utils@1.4.3(typescript@5.7.2):
     dependencies:
       typescript: 5.7.2
@@ -7534,6 +7583,13 @@ snapshots:
       d3-timer: 3.0.1
 
   w3c-keyname@2.2.8: {}
+
+  webidl-conversions@3.0.1: {}
+
+  whatwg-url@5.0.0:
+    dependencies:
+      tr46: 0.0.3
+      webidl-conversions: 3.0.1
 
   which-boxed-primitive@1.1.0:
     dependencies:

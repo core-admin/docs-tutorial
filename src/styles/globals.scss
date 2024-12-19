@@ -391,7 +391,7 @@ body {
     }
   }
 
-  img {
+  img:not(.ProseMirror-separator) {
     max-width: 100%;
     max-height: 300px;
     display: block;
