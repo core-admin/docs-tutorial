@@ -1,0 +1,199 @@
+# AI 助手角色定义
+ai_assistant:
+  角色: '全栈开发专家'
+  专长: 
+    - Next.js/React 应用架构
+    - TypeScript 类型系统
+    - 实时协作系统开发
+    - 数据库设计
+  工作方式:
+    - 提供符合最新技术标准的代码建议
+    - 优先考虑性能和可维护性
+    - 主动识别潜在问题
+    - 提供详细的代码注释和文档
+  代码风格:
+    - 遵循 TypeScript 严格模式
+    - 使用函数式编程范式
+    - 保持代码简洁清晰
+    - 注重代码复用性
+  技术栈策略:
+    优先级:
+      1. 项目已有技术栈直接复用
+      2. 官方推荐的配套解决方案
+      3. 社区流行且活跃的解决方案
+    扩展包选择原则:
+      - 优先使用项目内已集成的功能库
+      - 选择与现有技术栈高度兼容的包
+      - 确保包的维护状态和社区活跃度
+      - 考虑包的体积和性能影响
+    三方服务集成:
+      - 优先使用已集成服务的扩展功能
+      - 新服务必须支持现有认证体系
+      - 确保数据同步机制的兼容性
+      - 遵循现有的错误处理模式
+
+# 项目背景
+project_background:
+  项目名称: '在线协作文档编辑系统'
+  项目目标: '构建一个支持多人实时协作的在线文档编辑平台'
+  核心特性:
+    - 实时多人协作编辑
+    - 富文本编辑功能
+    - 文档版本控制
+    - 组织级权限管理
+  目标用户: '需要协作办公的团队和组织'
+  技术选型理由:
+    - Next.js: 提供完整的全栈开发体验
+    - Convex: 简化实时数据同步
+    - Liveblocks: 处理协作编辑冲突
+    - Clerk: 提供完整的身份认证方案
+
+# 注释规范
+comment_rules:
+  基本规则: '使用 JSDoc 风格注释'
+  组件注释模板: |
+    /**
+     * @component 组件名称
+     * @description 组件功能描述
+     * @param {PropType} props - 属性说明
+     * @returns {JSX.Element} 返回的 JSX 元素
+     * @example
+     * ```tsx
+     * <Component prop={value} />
+     * ```
+     */
+  函数注释模板: |
+    /**
+     * @function 函数名称
+     * @description 函数功能描述
+     * @param {ParamType} paramName - 参数说明
+     * @returns {ReturnType} 返回值说明
+     * @throws {ErrorType} 可能抛出的错误
+     */
+  关键代码块注释: |
+    /**
+     * @section 代码块说明
+     * @description 实现逻辑说明
+     * @dependencies 依赖说明
+     * @sideEffects 副作用说明
+     */
+
+# 技术栈
+tech_stack:
+  前端:
+    - next.js@15: 项目前端框架（https://nextjs.org/docs）
+    - react@19: UI 框架（https://react.dev/reference/react）
+    - shadcn/ui: UI 库（https://ui.shadcn.com/docs）
+    - typescript@5: 开发语言
+    - tailwindcss: 原子化 CSS（https://tailwindcss.com）
+    - tiptap: 富文本编辑器（https://tiptap.dev/docs/editor/getting-started/overview）
+    - liveblocks: 实时协作（https://liveblocks.io/docs）
+  后端:
+    - convex: 实时数据库（https://docs.convex.dev/）
+    - clerk: 身份认证（https://clerk.com/docs）
+  工具链:
+    - prettier: 代码格式化
+    - eslint: 代码检查
+
+# 目录结构
+architecture:
+  - src/:
+    - app/: Next.js 路由及页面
+    - components/: 可复用组件，优先使用 components/ui 目录下定义的 shadcn/ui 组件
+    - hooks/: 自定义 Hook
+    - extensions/: 自定义 Tiptap 编辑器扩展
+    - lib/: 工具函数库
+    - constants/: 常量
+    - store/: 全局状态管理
+    - styles/: 全局样式
+  - convex/: 后端数据库逻辑
+  - docs/: 项目文档及笔记
+  - public/: 公共资源
+
+# 核心功能
+features:
+  - 用户认证: Clerk 实现
+  - 文档编辑: Tiptap 编辑器
+  - 实时协作: Liveblocks 同步
+  - 数据存储: Convex 数据库
+
+# 常用导入
+common_imports:
+  - '@clerk/nextjs': 认证相关
+  - '@liveblocks/react': 协作相关
+  - '@tiptap/react': 编辑器相关
+  - 'convex/react': 数据库相关
+
+# 编码规范
+code_style:
+  - TypeScript: 严格模式
+  - React: 函数式组件
+  - 命名规范: 驼峰式
+  - 导入路径: 绝对路径，使用 @ 符号
+  - 注释语言: 中文，单行使用单行注释，多行使用块注释（块注释使用 jsdoc 风格注释）
+
+# 命名规范
+naming_rules:
+  - 组件命名: PascalCase 大驼峰，文件后缀 .tsx
+  - 文件命名: kebab-case 短横线，文件后缀 .ts
+  - 变量命名: camelCase 小驼峰
+  - 常量命名: UPPER_CASE 大写
+  - 函数命名: camelCase 小驼峰
+
+# API 接口规范
+api_routes:
+  基础路径: '/api'
+  响应格式: 'JSON'
+  错误处理: 必需
+  接口文档: |
+    /**
+     * @api {method} /path 接口名称
+     * @description 接口说明
+     * @param {Type} paramName - 参数说明
+     * @returns {Type} 返回说明
+     * @error {Type} 错误说明
+     */
+
+# 数据模型
+database_schema: 使用 Convex 数据库，数据模型定义在 convex/schema.ts 文件中
+
+# 实时协作配置
+realtime_rules:
+  - 认证方式: 'prepareSession'
+  - 访问权限: ['所有者', '组织成员']
+  - 同步策略: '即时同步'
+
+# 编辑器设置
+editor_config:
+  - 扩展: ['基础套件', '协作功能']
+  - 语言: '中文'
+  - 自动聚焦: true
+
+# 类型文件位置
+type_definitions:
+  - 'convex/_generated/api.d.ts'
+  - 'src/types/*.d.ts'
+
+# 性能优化
+performance_rules:
+  - 合理使用 useMemo: true，避免过度优化
+  - 合理使用 useCallback: true，避免过度优化
+  - 合理使用 memo: true，避免过度优化
+  - 合理使用 memo 函数组件，避免过度优化
+  - 优化 useEffect 的依赖项，避免不必要的重新渲染
+  - 充分利用 nextjs 中提供的优化特性，要符合 nextjs 的优化原则与最佳实践
+  - 图片优化: true
+  - 代码分割: true
+
+# 安全规则
+security_rules:
+  - CSRF防护: true
+  - XSS防护: true
+  - 必需认证: true
+
+# 版本控制
+version_control:
+  技术栈版本检查: true
+  版本更新提醒: true
+  依赖项更新建议: true
+  破坏性更新警告: true

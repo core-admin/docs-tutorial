@@ -26,7 +26,13 @@ const Home = () => {
       </div>
       <div className="mt-16">
         <TemplatesGallery />
-        <DocumentsTable documents={documents} loadMore={() => loadMore(10)} status={status} isLoading={isLoading} />
+        <DocumentsTable
+          search={search}
+          documents={documents}
+          loadMore={() => loadMore(10)}
+          status={status}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );

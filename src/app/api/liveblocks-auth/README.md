@@ -1,4 +1,4 @@
-好的，我来详细解释这个认证路由 API 的功能和实现细节。
+## rouer.ts 文件分析
 
 ### 整体功能
 
@@ -124,3 +124,70 @@ return res.status(status).json(body);
 3. 切换到不同文档时
 
 这个认证流程确保了实时协作的安全性，同时提供了良好的用户体验，因为它包含了用户的个性化信息（名字和头像）。
+
+## prepareSession 与 identifyUser
+
+### 1. prepareSession（访问令牌模式）
+
+```typescript
+const session = liveblocks.prepareSession(user.id, {
+  userInfo: { name: '张三', avatar: '...' },
+});
+session.allow('room-123', session.FULL_ACCESS);
+```
+
+**特点：**
+
+- 类似酒店房卡系统
+- 权限直接包含在令牌中
+- 权限在后端代码中动态控制
+- 适合动态/复杂的权限逻辑
+- 无需预先设置权限规则
+
+### 2. identifyUser（身份令牌模式）
+
+```typescript
+const { body, status } = await liveblocks.identifyUser(
+  {
+    userId: user.id,
+    groupIds: ['team-1', 'admin'],
+  },
+  {
+    userInfo: { name: '张三', avatar: '...' },
+  },
+);
+```
+
+**特点：**
+
+- 类似会员卡系统
+- 权限通过 Liveblocks REST API 预先配置
+- 权限规则集中管理
+- 适合固定/简单的权限规则
+- 需要预先设置权限规则
+
+### 选择建议
+
+使用 `prepareSession` 当：
+
+- 需要动态判断权限（如基于数据库查询）
+- 权限逻辑复杂
+- 想在代码中完全控制权限
+- 需要频繁更改权限规则
+
+使用 `identifyUser` 当：
+
+- 权限规则相对固定
+- 想集中管理权限
+- 使用 Liveblocks 的权限 REST API
+- 团队协作需要统一的权限管理
+
+### 你的场景
+
+根据你的代码，我建议继续使用 `prepareSession`，因为：
+
+1. 你需要基于文档所有权和组织成员身份动态判断权限
+2. 权限逻辑与数据库查询相关联
+3. 需要在代码中灵活控制访问权限
+
+参考：[Liveblocks 认证文档](https://liveblocks.io/docs/api-reference/liveblocks-node)

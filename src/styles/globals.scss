@@ -97,11 +97,13 @@ body {
   line-height: 1.5;
   position: relative;
 
+  /*
   &[spellcheck='true'] {
     &::spelling-error {
       text-decoration: wavy red;
     }
   }
+  */
 
   & > :first-child {
     margin-top: 0 !important;
@@ -428,13 +430,27 @@ body {
       height: 1.2em;
       border-top: none;
       border-left: 1px solid black;
-      animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
+      /* animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite; */
+      animation: cursor-blink 1.1s steps(2, start) infinite;
     }
   }
 
-  // @keyframes ProseMirror-cursor-blink {
-  //   to {
-  //     visibility: hidden;
-  //   }
-  // }
+  /*
+  @keyframes ProseMirror-cursor-blink {
+    to {
+      visibility: hidden;
+    }
+  }
+  */
+
+  /*  
+  :spelling-error {
+    text-decoration: wavy red;
+  }
+  */
+}
+@keyframes cursor-blink {
+  to {
+    visibility: hidden;
+  }
 }
