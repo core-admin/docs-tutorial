@@ -195,3 +195,31 @@ export const getById = query({
   },
   handler: (ctx, args) => ctx.db.get(args.id),
 });
+
+export const getByIds = query({
+  args: {
+    ids: v.array(v.id('documents')),
+  },
+  handler: async (ctx, args) => {
+    const results = await Promise.allSettled(
+      args.ids.map(async id => {
+        const document = await ctx.db.get(id);
+        return document
+          ? {
+              id: document._id,
+              name: document.title,
+            }
+          : { id, name: '[已删除/不存在]' };
+      }),
+    );
+
+    // 处理每个 Promise 的结果
+    return results.map((result, index) => {
+      if (result.status === 'fulfilled') {
+        return result.value;
+      }
+      // 如果查询失败，返回错误状态
+      return { id: args.ids[index], name: '[查询失败]' };
+    });
+  },
+});

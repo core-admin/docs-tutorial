@@ -1,10 +1,11 @@
 'use client';
 
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { LiveblocksProvider, RoomProvider, ClientSideSuspense } from '@liveblocks/react/suspense';
 import { useParams } from 'next/navigation';
 import FullscreenLoader from '@/components/fullscreen-loader';
-import { getUsers } from './actions';
+import { getDocuments, getUsers } from './actions';
+import { Id } from '../../../../convex/_generated/dataModel';
 
 interface User {
   id: string;
@@ -41,8 +42,12 @@ export function Room({ children }: { children: ReactNode }) {
     return filteredUsers.map(user => user.id);
   };
 
-  const resolveRoomsInfo = ({ roomIds }: { roomIds: string[] }) => {
-    return [];
+  const resolveRoomsInfo = async ({ roomIds }: { roomIds: string[] }) => {
+    const documents = await getDocuments(roomIds as Id<'documents'>[]);
+    return documents.map(document => ({
+      id: document.id,
+      name: document.name,
+    }));
   };
 
   /**
@@ -52,10 +57,27 @@ export function Room({ children }: { children: ReactNode }) {
     return userIds.map(id => users.find(user => user.id === id)).filter(Boolean);
   };
 
+  const authEndpoint = async () => {
+    const endpoint = '/api/liveblocks-auth';
+    const room = params.documentId as string;
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      body: JSON.stringify({ room }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch auth endpoint');
+    }
+
+    return response.json();
+  };
+
   return (
     <LiveblocksProvider
       // publicApiKey={process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_API_KEY!}
-      authEndpoint={'/api/liveblocks-auth'}
+      // authEndpoint={'/api/liveblocks-auth'}
+      authEndpoint={authEndpoint}
       throttle={16}
       resolveMentionSuggestions={resolveMentionSuggestions}
       resolveRoomsInfo={resolveRoomsInfo}

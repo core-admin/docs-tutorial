@@ -45,7 +45,7 @@ export async function POST(req: Request, res: Response) {
   }
 
   const { room } = await req.json();
-  console.log('room', room);
+  console.log('room >>>>>>>>>>>>>>', room);
   const document = await convex.query(api.documents.getById, { id: room });
 
   if (!document) {

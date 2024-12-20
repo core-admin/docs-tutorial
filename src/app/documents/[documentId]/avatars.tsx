@@ -1,4 +1,4 @@
-import { ClientSideSuspense } from '@liveblocks/react';
+import { ClientSideSuspense } from '@liveblocks/react/suspense';
 import { useOthers, useSelf } from '@liveblocks/react/suspense';
 import { Separator } from '@/components/ui/separator';
 
@@ -20,7 +20,7 @@ const AvatarStack = () => {
 
   return (
     <>
-      <div className="flex items-center">
+      <div className="AvatarStackComponent flex items-center">
         {currentUser && (
           <div className="relative ml-2">
             <Avatar src={currentUser.info.avatar} name="You" />

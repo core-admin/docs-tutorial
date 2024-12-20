@@ -10,11 +10,8 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarSeparator,
-  MenubarLabel,
-  MenubarPortal,
   MenubarSubContent,
   MenubarSubTrigger,
-  MenubarGroup,
   MenubarSub,
   MenubarShortcut,
 } from '@/components/ui/menubar';
@@ -43,10 +40,12 @@ import { useEditorStore } from '@/store/use-editor-store';
 import { UserButton, OrganizationSwitcher } from '@clerk/nextjs';
 import { memo } from 'react';
 import { Avatars } from './avatars';
+import { Inbox } from './inbox';
 
 const RightUserAction = () => (
-  <div className="flex gap-3 items-center">
+  <div className="RightUserActionComponent flex gap-3 items-center">
     <Avatars />
+    <Inbox />
     <OrganizationSwitcher
       afterCreateOrganizationUrl="/"
       afterLeaveOrganizationUrl="/"
@@ -105,7 +104,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between">
+    <nav className="NavbarComponent flex items-center justify-between">
       <div className="flex gap-2 items-center">
         <Link href="/">
           <Image src="/logo.svg" alt="logo" width={30} height={30} />

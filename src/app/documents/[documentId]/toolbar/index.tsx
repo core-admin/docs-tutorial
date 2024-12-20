@@ -158,7 +158,7 @@ export const Toolbar = () => {
   ];
 
   return (
-    <div className="bg-[#f1f4f9] px-2.5 py-0.5 rounded-3xl flex justify-center items-center gap-x-0.5 overflow-x-auto">
+    <div className="ToolbarComponent bg-[#f1f4f9] px-2.5 py-0.5 rounded-3xl flex justify-center items-center gap-x-0.5 overflow-x-auto">
       <TooltipProvider delayDuration={300}>
         {sections[0].map(item => (
           <ToolbarButton key={item.label} tooltipLabel={item.label} {...item}>
