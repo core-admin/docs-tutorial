@@ -28,6 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" className="trancy-zh-CN">
+      {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" async /> */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NuqsAdapter>
           <ConvexClientProvider>{children}</ConvexClientProvider>

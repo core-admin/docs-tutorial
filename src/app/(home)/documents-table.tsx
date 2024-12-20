@@ -17,20 +17,20 @@ interface DocumentsTableProps {
 }
 
 export const DocumentsTable = ({ documents, status, isLoading, loadMore }: DocumentsTableProps) => {
+  console.log('DocumentsTable documents >>> ', documents);
+
   const loadText = useMemo(() => {
-    if (status === 'CanLoadMore' && documents.length < 10) {
-      return '没有更多了';
-    } else if (status === 'CanLoadMore') {
-      return '加载更多';
-    } else if (status === 'LoadingMore') {
+    if (status === 'LoadingMore') {
       return '正在加载';
     } else if (status === 'Exhausted') {
       return '没有更多了';
+    } else if (status === 'CanLoadMore') {
+      return '加载更多';
     }
     return null;
-  }, [status, documents]);
+  }, [status]);
 
-  const isMoreData = loadText !== null || loadText !== '没有更多了';
+  const isMoreData = status === 'CanLoadMore';
 
   return (
     <div className="max-w-screen-xl mx-auto px-16 py-6 flex flex-col gap-5">

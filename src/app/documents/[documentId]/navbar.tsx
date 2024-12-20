@@ -42,9 +42,11 @@ import { usePlatform } from '@/hooks/use-platform';
 import { useEditorStore } from '@/store/use-editor-store';
 import { UserButton, OrganizationSwitcher } from '@clerk/nextjs';
 import { memo } from 'react';
+import { Avatars } from './avatars';
 
 const RightUserAction = () => (
   <div className="flex gap-3 items-center">
+    <Avatars />
     <OrganizationSwitcher
       afterCreateOrganizationUrl="/"
       afterLeaveOrganizationUrl="/"
@@ -242,7 +244,7 @@ export const Navbar = () => {
           </div>
         </div>
       </div>
-      {/* <MemoRightUserAction /> */}
+      <MemoRightUserAction />
     </nav>
   );
 };

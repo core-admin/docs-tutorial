@@ -2,6 +2,17 @@ import { Liveblocks } from '@liveblocks/node';
 import { ConvexHttpClient } from 'convex/browser';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { api } from '../../../../convex/_generated/api';
+import { getUserName } from '@/lib/utils';
+
+const returnUnauthorized = (message: string) => {
+  return new Response(JSON.stringify({ message }), {
+    status: 401,
+    // 禁止重试 - Liveblocks 会自动重试，此设置无效
+    headers: {
+      'X-Should-Retry': 'false',
+    },
+  });
+};
 
 /**
  * 创建一个 Convex HTTP 客户端实例，用于与 Convex 后端服务进行通信。
@@ -10,6 +21,9 @@ import { api } from '../../../../convex/_generated/api';
  *   - 查询数据
  *   - 调用 Convex 函数
  *   - 管理数据同步
+ *
+ * 当一个没有权限的用户访问我的文档地址时，当前请求会执行抛出401的错误。
+ * 默认情况下 Convex 会自动重试失败的请求，当超过重试次数后，会展示错误页面（error.tsx）。
  */
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
@@ -21,13 +35,13 @@ export async function POST(req: Request, res: Response) {
   const { sessionClaims } = await auth();
 
   if (!sessionClaims) {
-    return new Response(JSON.stringify({ message: '无权限访问' }), { status: 401 });
+    return returnUnauthorized('无权限访问');
   }
 
   const user = await currentUser();
 
   if (!user) {
-    return new Response(JSON.stringify({ message: '无权限访问' }), { status: 401 });
+    return returnUnauthorized('无权限访问');
   }
 
   const { room } = await req.json();
@@ -35,7 +49,7 @@ export async function POST(req: Request, res: Response) {
   const document = await convex.query(api.documents.getById, { id: room });
 
   if (!document) {
-    return new Response(JSON.stringify({ message: '文档不存在' }), { status: 404 });
+    return returnUnauthorized('文档不存在');
   }
 
   const isOwner = document.ownerId === user.id;
@@ -45,7 +59,7 @@ export async function POST(req: Request, res: Response) {
    * 只要是文档的拥有者或者组织成员，都可以访问（都会创建可允许访问的jwt，然后根据对应的jwt与房间建立关联）
    */
   if (!isOwner && !isOrgMember) {
-    return new Response(JSON.stringify({ message: '无权限访问' }), { status: 401 });
+    return returnUnauthorized('无权限访问');
   }
 
   /**
@@ -65,9 +79,10 @@ export async function POST(req: Request, res: Response) {
    *  - 为用户建立安全的连接通道
    *  - 为后续的用户身份验证和房间访问做准备
    */
+  console.log('liveblocks-auth user >>> ', user, user.fullName);
   const session = liveblocks.prepareSession(user.id, {
     userInfo: {
-      name: user.fullName ?? '匿名',
+      name: getUserName(user),
       avatar: user.imageUrl,
     },
   });
