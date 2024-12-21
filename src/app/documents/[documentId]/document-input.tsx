@@ -94,7 +94,6 @@ export const DocumentInput = ({ title, id }: DocumentInputProps) => {
   };
 
   const showLoader = isPending || status === 'connecting' || status === 'reconnecting';
-  console.log('status', status, isPending);
   const showError = status === 'disconnected';
 
   return (
@@ -119,7 +118,8 @@ export const DocumentInput = ({ title, id }: DocumentInputProps) => {
               inputRef.current?.focus();
             });
           }}
-          className="text-base px-1.5 truncate"
+          className="max-w-[50ch] text-base px-1.5 truncate"
+          title={title}
         >
           {title ?? '无标题文档'}
         </span>
