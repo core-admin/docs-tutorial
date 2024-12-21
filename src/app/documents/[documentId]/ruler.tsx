@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils';
 import { useRef, useState, useEffect } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
+import { useStorage, useMutation } from '@liveblocks/react/suspense';
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 
@@ -10,26 +11,44 @@ export const Ruler = () => {
   const defaultLeftMargin = 56;
   const defaultRightMargin = 56;
   const marginGap = 100;
-  const [leftMargin, setLeftMargin] = useState(defaultLeftMargin);
-  const [rightMargin, setRightMargin] = useState(defaultRightMargin);
+
+  // const [leftMargin, setLeftMargin] = useState(defaultLeftMargin);
+  // const [rightMargin, setRightMargin] = useState(defaultRightMargin);
+
   const [isDraggingLeft, setIsDraggingLeft] = useState(false);
   const [isDraggingRight, setIsDraggingRight] = useState(false);
   const rulerRef = useRef<HTMLDivElement>(null);
 
+  const leftMargin = useStorage(root => root.leftMargin || defaultLeftMargin);
+  const setLeftMargin = useMutation(({ storage }, position: number) => {
+    storage.set('leftMargin', position);
+  }, []);
+
+  const rightMargin = useStorage(root => root.rightMargin || defaultRightMargin);
+  const setRightMargin = useMutation(({ storage }, position: number) => {
+    storage.set('rightMargin', position);
+  }, []);
+
   const handleLeftMarkerMouseDown = () => {
     setIsDraggingLeft(true);
+    setContainerRect();
   };
 
   const handleRightMarkerMouseDown = () => {
     setIsDraggingRight(true);
+    setContainerRect();
   };
 
   const handleLeftMarkerDoubleClick = () => {
-    setLeftMargin(defaultLeftMargin);
+    if (leftMargin !== defaultLeftMargin) {
+      setLeftMargin(defaultLeftMargin);
+    }
   };
 
   const handleRightMarkerDoubleClick = () => {
-    setRightMargin(defaultRightMargin);
+    if (rightMargin !== defaultRightMargin) {
+      setRightMargin(defaultRightMargin);
+    }
   };
 
   const handleMouseUp = () => {
@@ -37,17 +56,25 @@ export const Ruler = () => {
     setIsDraggingRight(false);
   };
 
+  const containerRect = useRef<DOMRect | null>(null);
+  const setContainerRect = () => {
+    const container = rulerRef.current?.querySelector('#ruler-container');
+    if (!container) {
+      return null;
+    }
+    containerRect.current = container.getBoundingClientRect();
+  };
+
   const handleMouseMove = (e: MouseEvent) => {
     if (!(isDraggingLeft || isDraggingRight) || !rulerRef.current) {
       return;
     }
 
-    const container = rulerRef.current?.querySelector('#ruler-container');
-    if (!container) {
+    if (!containerRect.current) {
       return;
     }
 
-    const { width: containerWidth, left: containerLeft } = container.getBoundingClientRect();
+    const { width: containerWidth, left: containerLeft } = containerRect.current;
     const relativeX = e.clientX - containerLeft;
     /**
      * 计算并限制标尺标记的位置值
@@ -73,8 +100,8 @@ export const Ruler = () => {
 
   useEffect(() => {
     if (isDraggingLeft || isDraggingRight) {
-      window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('mousemove', handleMouseMove);
     }
 
     return () => {
