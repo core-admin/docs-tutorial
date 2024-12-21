@@ -1,31 +1,32 @@
-'use client';
-
 import { Editor } from './editor';
 import { Navbar } from './navbar';
 import { Toolbar } from './toolbar';
 import { Room } from './room';
+import { Id } from '../../../../convex/_generated/dataModel';
+import { Document } from './document';
+import { api } from '../../../../convex/_generated/api';
+import { auth } from '@clerk/nextjs/server';
+import { preloadQuery } from 'convex/nextjs';
 
 interface DocumentIdPageProps {
   // https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
   params: Promise<{
-    documentId: string;
+    documentId: Id<'documents'>;
   }>;
 }
 
-const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
-  return (
-    <Room>
-      <div className="DocumentIdPage h-screen bg-[#fafbfd] flex flex-col">
-        <div className="flex flex-col px-4 pt-2 gap-y-2 fixed top-0 left-0 right-0 z-10 bg-[#fafbfd] h-[104px] print:hidden">
-          <Navbar />
-          <Toolbar />
-        </div>
-        <div className="pt-[104px] print:pt-0 flex-1">
-          <Editor />
-        </div>
-      </div>
-    </Room>
-  );
+const DocumentIdPage = async ({ params }: DocumentIdPageProps) => {
+  const { documentId } = await params;
+  const { getToken } = await auth();
+  const token = (await getToken({ template: 'convex' })) ?? undefined;
+
+  if (!token) {
+    throw new Error('无权限访问');
+  }
+
+  const preloadedDocument = await preloadQuery(api.documents.getById, { id: documentId }, { token });
+
+  return <Document preloadedDocument={preloadedDocument} />;
 };
 
 export default DocumentIdPage;

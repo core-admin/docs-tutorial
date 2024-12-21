@@ -41,6 +41,7 @@ import { UserButton, OrganizationSwitcher } from '@clerk/nextjs';
 import { memo } from 'react';
 import { Avatars } from './avatars';
 import { Inbox } from './inbox';
+import { Doc } from '../../../../convex/_generated/dataModel';
 
 const RightUserAction = () => (
   <div className="RightUserActionComponent flex gap-3 items-center">
@@ -58,7 +59,11 @@ const RightUserAction = () => (
 
 const MemoRightUserAction = memo(RightUserAction);
 
-export const Navbar = () => {
+interface NavbarProps {
+  data: Doc<'documents'>;
+}
+
+export const Navbar = ({ data }: NavbarProps) => {
   const platform = usePlatform();
   const { editor } = useEditorStore();
 
@@ -79,7 +84,7 @@ export const Navbar = () => {
       return;
     }
     const blob = new Blob([JSON.stringify(editor.getJSON())], { type: 'application/json' });
-    onDownload(blob, 'document.json'); // TODO: 获取文件名
+    onDownload(blob, `${data.title}.json`); // TODO: 获取文件名
   };
 
   const onDownloadHtml = () => {
@@ -87,7 +92,7 @@ export const Navbar = () => {
       return;
     }
     const blob = new Blob([editor.getHTML()], { type: 'text/html' });
-    onDownload(blob, 'document.html'); // TODO: 获取文件名
+    onDownload(blob, `${data.title}.html`); // TODO: 获取文件名
   };
 
   // TODO: 功能未实现
@@ -100,7 +105,7 @@ export const Navbar = () => {
       return;
     }
     const blob = new Blob([editor.getText()], { type: 'text/plain' });
-    onDownload(blob, 'document.txt'); // TODO: 获取文件名
+    onDownload(blob, `${data.title}.txt`); // TODO: 获取文件名
   };
 
   return (
@@ -110,7 +115,7 @@ export const Navbar = () => {
           <Image src="/logo.svg" alt="logo" width={30} height={30} />
         </Link>
         <div className="flex flex-col gap-y-1">
-          <DocumentInput />
+          <DocumentInput title={data.title} id={data._id} />
           <div className="flex">
             <Menubar className="border-none bg-transparent shadow-none h-auto p-0">
               <MenubarMenu>

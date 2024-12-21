@@ -20,8 +20,6 @@ export function getUserName(user: User) {
     const hasEnglish = (str: string) => /[a-zA-Z]/.test(str);
     const needSpace = hasEnglish(user.firstName) || hasEnglish(user.lastName);
 
-    console.log('needSpace', needSpace, user.firstName, user.lastName);
-
     name = needSpace
       ? `${user.firstName} ${user.lastName}` // 英文名用空格分隔
       : `${user.firstName}${user.lastName}`; // 中文名直接拼接

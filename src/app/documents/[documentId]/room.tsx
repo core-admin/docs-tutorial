@@ -90,7 +90,7 @@ export function Room({ children }: { children: ReactNode }) {
           rightMargin: 56,
         }}
       >
-        <ClientSideSuspense fallback={<FullscreenLoader label="文档加载中..." />}>{children}</ClientSideSuspense>
+        <ClientSideSuspense fallback={<FullscreenLoader label="建立连接中 ..." />}>{children}</ClientSideSuspense>
       </RoomProvider>
     </LiveblocksProvider>
   );

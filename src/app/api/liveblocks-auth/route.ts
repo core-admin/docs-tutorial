@@ -45,12 +45,8 @@ export async function POST(req: Request, res: Response) {
   }
 
   const { room } = await req.json();
-  console.log('room >>>>>>>>>>>>>>', room);
-  const document = await convex.query(api.documents.getById, { id: room });
 
-  if (!document) {
-    return returnUnauthorized('文档不存在');
-  }
+  const document = await convex.query(api.documents.getById, { id: room });
 
   const isOwner = document.ownerId === user.id;
   const isOrgMember = document.organizationId != undefined && document.organizationId === sessionClaims.org_id;
