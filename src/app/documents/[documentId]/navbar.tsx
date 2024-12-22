@@ -38,10 +38,16 @@ import { BsFilePdf } from 'react-icons/bs';
 import { usePlatform } from '@/hooks/use-platform';
 import { useEditorStore } from '@/store/use-editor-store';
 import { UserButton, OrganizationSwitcher } from '@clerk/nextjs';
-import { memo } from 'react';
+import { memo, useState, useReducer } from 'react';
 import { Avatars } from './avatars';
 import { Inbox } from './inbox';
 import { Doc } from '../../../../convex/_generated/dataModel';
+import { useMutation } from 'convex/react';
+import { api } from '../../../../convex/_generated/api';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { RemoveDialog } from '@/components/remove-dialog';
+import { RenameDialog } from '@/components/rename-dialog';
 
 const RightUserAction = () => (
   <div className="RightUserActionComponent flex gap-3 items-center">
@@ -66,6 +72,9 @@ interface NavbarProps {
 export const Navbar = ({ data }: NavbarProps) => {
   const platform = usePlatform();
   const { editor } = useEditorStore();
+
+  const router = useRouter();
+  const createDocument = useMutation(api.documents.create);
 
   const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
     editor?.chain().focus().insertTable({ rows, cols }).run();
@@ -108,6 +117,29 @@ export const Navbar = ({ data }: NavbarProps) => {
     onDownload(blob, `${data.title}.txt`); // TODO: 获取文件名
   };
 
+  // const [currentMenubar, setCurrentMenubar] = useState<string | undefined>(undefined);
+  // const onMenubarChange = (menu: string) => {
+  //   setCurrentMenubar(menu);
+  // };
+
+  const onCreateDocument = () => {
+    toast.promise(
+      () =>
+        createDocument({ title: '未命名文档' }).then(id => {
+          router.push(`/documents/${id}`);
+        }),
+      {
+        loading: '创建中...',
+        success: '创建成功',
+        error: '创建失败',
+      },
+    );
+  };
+
+  const documentRemoveComplete = () => {
+    router.replace('/');
+  };
+
   return (
     <nav className="NavbarComponent flex items-center justify-between">
       <div className="flex gap-2 items-center">
@@ -117,25 +149,35 @@ export const Navbar = ({ data }: NavbarProps) => {
         <div className="flex flex-col gap-y-1">
           <DocumentInput title={data.title} id={data._id} />
           <div className="flex">
-            <Menubar className="border-none bg-transparent shadow-none h-auto p-0">
-              <MenubarMenu>
+            <Menubar
+              className="border-none bg-transparent shadow-none h-auto p-0"
+              // value={currentMenubar}
+              // onValueChange={onMenubarChange}
+            >
+              <MenubarMenu value="file">
                 <MenubarTrigger className="font-normal">文件</MenubarTrigger>
                 <MenubarContent className="print:hidden">
-                  <MenubarItem>
+                  <MenubarItem onClick={onCreateDocument}>
                     <FilePlusIcon className="size-4 mr-2" />
                     新建文档
                   </MenubarItem>
-                  <MenubarItem>
-                    <FilePenIcon className="size-4 mr-2" />
-                    重命名...
-                  </MenubarItem>
+                  <RenameDialog
+                    documentId={data._id}
+                    initialTitle={data.title}
+                    // onOpenChange={open => !open && setCurrentMenubar(undefined)}
+                  >
+                    <MenubarItem onSelect={e => e.preventDefault()}>
+                      <FilePenIcon className="size-4 mr-2" />
+                      重命名...
+                    </MenubarItem>
+                  </RenameDialog>
 
                   <MenubarSeparator />
 
-                  <MenubarItem>
+                  {/* <MenubarItem>
                     <SaveIcon className="size-4 mr-2" />
                     保存
-                  </MenubarItem>
+                  </MenubarItem> */}
                   <MenubarSub>
                     <MenubarSubTrigger className="font-normal">
                       <FileIcon className="size-4 mr-2" />
@@ -166,14 +208,16 @@ export const Navbar = ({ data }: NavbarProps) => {
                     打印
                     <MenubarShortcut>{platform === 'mac' ? '⌘ P' : 'Ctrl P'}</MenubarShortcut>
                   </MenubarItem>
-                  <MenubarItem>
-                    <Trash2Icon className="size-4 mr-2" />
-                    删除
-                  </MenubarItem>
+                  <RemoveDialog documentId={data._id} onComplete={documentRemoveComplete}>
+                    <MenubarItem onSelect={e => e.preventDefault()}>
+                      <Trash2Icon className="size-4 mr-2" />
+                      删除
+                    </MenubarItem>
+                  </RemoveDialog>
                 </MenubarContent>
               </MenubarMenu>
 
-              <MenubarMenu>
+              <MenubarMenu value="edit">
                 <MenubarTrigger className="font-normal">编辑</MenubarTrigger>
                 <MenubarContent>
                   <MenubarItem onClick={() => editor?.chain().focus().undo().run()}>
@@ -189,7 +233,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                 </MenubarContent>
               </MenubarMenu>
 
-              <MenubarMenu>
+              <MenubarMenu value="insert">
                 <MenubarTrigger className="font-normal">插入</MenubarTrigger>
                 <MenubarContent>
                   <MenubarSub>
@@ -205,7 +249,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                 </MenubarContent>
               </MenubarMenu>
 
-              <MenubarMenu>
+              <MenubarMenu value="format">
                 <MenubarTrigger className="font-normal">格式化</MenubarTrigger>
                 <MenubarContent>
                   <MenubarSub>

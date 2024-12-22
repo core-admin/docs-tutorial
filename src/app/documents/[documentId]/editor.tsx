@@ -34,13 +34,22 @@ import { useLiveblocksExtension } from '@liveblocks/react-tiptap';
 import { Threads } from './threads';
 
 import { useStorage } from '@liveblocks/react/suspense';
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from '@/constants/margins';
 
-export const Editor = () => {
+interface EditorProps {
+  initialContent?: string | undefined;
+}
+
+export const Editor = ({ initialContent }: EditorProps) => {
   const { setEditor } = useEditorStore();
 
-  const liveblocks = useLiveblocksExtension();
-  const leftMargin = useStorage(root => root.leftMargin);
-  const rightMargin = useStorage(root => root.rightMargin);
+  const liveblocks = useLiveblocksExtension({
+    initialContent: initialContent || '',
+    offlineSupport_experimental: true,
+  });
+
+  const leftMargin = useStorage(root => root.leftMargin ?? LEFT_MARGIN_DEFAULT);
+  const rightMargin = useStorage(root => root.rightMargin ?? RIGHT_MARGIN_DEFAULT);
 
   const editor = useEditor({
     onCreate({ editor }) {
@@ -76,7 +85,7 @@ export const Editor = () => {
       attributes: {
         class:
           'bg-white border border-[#c7c7c7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text focus:outline-none print:border-0',
-        style: `padding-left: ${leftMargin ?? 56}px; padding-right: ${rightMargin ?? 56}px;`,
+        style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px;`,
         lang: 'zh-CN',
       },
     },
@@ -192,11 +201,10 @@ export const Editor = () => {
         HTMLAttributes: { class: 'table-row-node', 'data-type': 'tableRow' },
       }),
     ],
-    content: ``,
   });
 
   return (
-    <div className="EditorComponent size-full overflow-x-auto bg-[#f9fbfd] px-4 print:bg-white print:overflow-visible">
+    <div className="EditorComponent size-full overflow-x-auto bg-[#f9fbfd] px-4 print:bg-white print:overflow-visible relative">
       <Ruler />
       <div className="min-w-max flex justify-center w-[816px] py-4 print:py-0 mx-auto print:w-full print:min-w-0">
         <EditorContent className="editor-root" editor={editor} />

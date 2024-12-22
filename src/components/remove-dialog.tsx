@@ -22,9 +22,10 @@ interface RemoveDialogProps {
   documentId: Id<'documents'>;
   children: React.ReactNode;
   onOpenChange?: (open: boolean) => void;
+  onComplete?: () => void;
 }
 
-export const RemoveDialog = ({ documentId, children, onOpenChange }: RemoveDialogProps) => {
+export const RemoveDialog = ({ documentId, children, onOpenChange, onComplete }: RemoveDialogProps) => {
   const remove = useMutation(api.documents.removeById);
   const [isRemoving, setIsRemoving] = useState(false);
   const [open, setOpen] = useState(false);
@@ -34,6 +35,7 @@ export const RemoveDialog = ({ documentId, children, onOpenChange }: RemoveDialo
     remove({ id: documentId })
       .then(() => {
         toast.success('文档已删除');
+        onComplete?.();
       })
       .catch(e => {
         toast.error(e.data || e.message || '删除失败');

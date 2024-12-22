@@ -58,8 +58,7 @@ const TemplatesGallery = () => {
                       }}
                       className="size-full rounded-sm border hover:border-blue-500 hover:bg-blue-50 transition flex flex-col items-center justify-center gap-y-4 bg-white"
                       disabled={isCreating}
-                      // TODO: 初始化内容未完善
-                      onClick={() => onTemplateClick(template.label, '')}
+                      onClick={() => onTemplateClick(template.label, template.initialContent?.trim() || '')}
                     />
                     <p className="text-sm font-medium truncate">{template.label}</p>
                   </div>

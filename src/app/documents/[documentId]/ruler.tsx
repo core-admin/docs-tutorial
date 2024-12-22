@@ -4,12 +4,11 @@ import { cn } from '@/lib/utils';
 import { useRef, useState, useEffect } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import { useStorage, useMutation } from '@liveblocks/react/suspense';
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from '@/constants/margins';
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 
 export const Ruler = () => {
-  const defaultLeftMargin = 56;
-  const defaultRightMargin = 56;
   const marginGap = 100;
 
   // const [leftMargin, setLeftMargin] = useState(defaultLeftMargin);
@@ -19,12 +18,12 @@ export const Ruler = () => {
   const [isDraggingRight, setIsDraggingRight] = useState(false);
   const rulerRef = useRef<HTMLDivElement>(null);
 
-  const leftMargin = useStorage(root => root.leftMargin || defaultLeftMargin);
+  const leftMargin = useStorage(root => root.leftMargin || LEFT_MARGIN_DEFAULT);
   const setLeftMargin = useMutation(({ storage }, position: number) => {
     storage.set('leftMargin', position);
   }, []);
 
-  const rightMargin = useStorage(root => root.rightMargin || defaultRightMargin);
+  const rightMargin = useStorage(root => root.rightMargin || RIGHT_MARGIN_DEFAULT);
   const setRightMargin = useMutation(({ storage }, position: number) => {
     storage.set('rightMargin', position);
   }, []);
@@ -40,14 +39,14 @@ export const Ruler = () => {
   };
 
   const handleLeftMarkerDoubleClick = () => {
-    if (leftMargin !== defaultLeftMargin) {
-      setLeftMargin(defaultLeftMargin);
+    if (leftMargin !== LEFT_MARGIN_DEFAULT) {
+      setLeftMargin(LEFT_MARGIN_DEFAULT);
     }
   };
 
   const handleRightMarkerDoubleClick = () => {
-    if (rightMargin !== defaultRightMargin) {
-      setRightMargin(defaultRightMargin);
+    if (rightMargin !== RIGHT_MARGIN_DEFAULT) {
+      setRightMargin(RIGHT_MARGIN_DEFAULT);
     }
   };
 
@@ -86,14 +85,14 @@ export const Ruler = () => {
 
     if (isDraggingLeft) {
       const maxLeftPosition = containerWidth - rightMargin - marginGap;
-      const newLeftPosition = Math.max(defaultLeftMargin, Math.min(rawPosition, maxLeftPosition));
+      const newLeftPosition = Math.max(LEFT_MARGIN_DEFAULT, Math.min(rawPosition, maxLeftPosition));
       setLeftMargin(newLeftPosition);
     } else if (isDraggingRight) {
       const maxRightPosition = containerWidth - (leftMargin + marginGap);
       // 直接使用相对位置，从容器右侧开始计算
       const newRightPosition = containerWidth - rawPosition;
       // 确保不会小于0且不会与左边重叠
-      const constrainedRightPosition = Math.max(defaultRightMargin, Math.min(newRightPosition, maxRightPosition));
+      const constrainedRightPosition = Math.max(RIGHT_MARGIN_DEFAULT, Math.min(newRightPosition, maxRightPosition));
       setRightMargin(constrainedRightPosition);
     }
   };
@@ -113,7 +112,7 @@ export const Ruler = () => {
 
   return (
     <div
-      className="h-6 border-b w-[816px] mx-auto border-gray-300 flex items-end relative select-none print:hidden"
+      className="h-6 border-b w-[816px] mx-auto border-gray-300 flex items-end select-none print:hidden sticky top-0 z-10 bg-[#f9fbfd]"
       ref={rulerRef}
       // onMouseMove={handleMouseMove}
       // onMouseUp={handleMouseUp}

@@ -31,7 +31,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
           重新尝试
         </Button>
 
-        <Button onClick={reset} asChild variant="ghost">
+        <Button asChild variant="ghost">
           <Link href="/">
             <ArrowLeft className="size-4" />
             返回首页

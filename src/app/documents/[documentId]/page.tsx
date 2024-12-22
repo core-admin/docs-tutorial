@@ -7,6 +7,7 @@ import { Document } from './document';
 import { api } from '../../../../convex/_generated/api';
 import { auth } from '@clerk/nextjs/server';
 import { preloadQuery } from 'convex/nextjs';
+import { redirect } from 'next/navigation';
 
 interface DocumentIdPageProps {
   // https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
@@ -24,9 +25,13 @@ const DocumentIdPage = async ({ params }: DocumentIdPageProps) => {
     throw new Error('无权限访问');
   }
 
-  const preloadedDocument = await preloadQuery(api.documents.getById, { id: documentId }, { token });
+  try {
+    const preloadedDocument = await preloadQuery(api.documents.getById, { id: documentId }, { token });
 
-  return <Document preloadedDocument={preloadedDocument} />;
+    return <Document preloadedDocument={preloadedDocument} />;
+  } catch (error) {
+    redirect('/');
+  }
 };
 
 export default DocumentIdPage;
