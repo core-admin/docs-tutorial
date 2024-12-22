@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import { useStorage, useMutation } from '@liveblocks/react/suspense';
 import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from '@/constants/margins';
+import { EDITOR_WIDTH } from '@/constants/editor';
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 
@@ -112,7 +113,8 @@ export const Ruler = () => {
 
   return (
     <div
-      className="h-6 border-b w-[816px] mx-auto border-gray-300 flex items-end select-none print:hidden sticky top-0 z-10 bg-[#f9fbfd]"
+      className="h-6 border-b mx-auto border-gray-300 flex items-end select-none print:hidden sticky top-0 z-10 bg-[#f9fbfd]"
+      style={{ width: EDITOR_WIDTH }}
       ref={rulerRef}
       // onMouseMove={handleMouseMove}
       // onMouseUp={handleMouseUp}
@@ -134,9 +136,9 @@ export const Ruler = () => {
           onDoubleClick={handleRightMarkerDoubleClick}
         />
         <div className="absolute inset-x-0 bottom-0 h-full">
-          <div className="relative h-full w-[816px]">
+          <div className="relative h-full" style={{ width: EDITOR_WIDTH }}>
             {markers.map(marker => {
-              const position = (marker * 816) / 82;
+              const position = (marker * EDITOR_WIDTH) / 82;
               return (
                 <div key={marker} className="absolute bottom-0" style={{ left: `${position}px` }}>
                   {marker % 10 === 0 && (

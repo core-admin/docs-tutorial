@@ -35,6 +35,7 @@ import { Threads } from './threads';
 
 import { useStorage } from '@liveblocks/react/suspense';
 import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from '@/constants/margins';
+import { EDITOR_WIDTH } from '@/constants/editor';
 
 interface EditorProps {
   initialContent?: string | undefined;
@@ -84,8 +85,8 @@ export const Editor = ({ initialContent }: EditorProps) => {
     editorProps: {
       attributes: {
         class:
-          'bg-white border border-[#c7c7c7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text focus:outline-none print:border-0',
-        style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px;`,
+          'bg-white border border-[#c7c7c7] flex flex-col min-h-[1054px] pt-10 pr-14 pb-10 cursor-text focus:outline-none print:border-0',
+        style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px; width: ${EDITOR_WIDTH}px;`,
         lang: 'zh-CN',
       },
     },
@@ -206,7 +207,10 @@ export const Editor = ({ initialContent }: EditorProps) => {
   return (
     <div className="EditorComponent size-full overflow-x-auto bg-[#f9fbfd] px-4 print:bg-white print:overflow-visible relative">
       <Ruler />
-      <div className="min-w-max flex justify-center w-[816px] py-4 print:py-0 mx-auto print:w-full print:min-w-0">
+      <div
+        className="min-w-max flex justify-center py-4 print:py-0 mx-auto print:w-full print:min-w-0"
+        style={{ width: EDITOR_WIDTH }}
+      >
         <EditorContent className="editor-root" editor={editor} />
         <Threads editor={editor} />
       </div>
