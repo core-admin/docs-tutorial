@@ -6,7 +6,8 @@
     "dev": "NEXT_TELEMETRY_DISABLED=1 next dev --turbopack",
     "build": "NEXT_TELEMETRY_DISABLED=1 next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "convex:dev": "convex dev"
   },
   "dependencies": {
     "@clerk/localizations": "^3.9.3",
