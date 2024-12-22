@@ -58,6 +58,11 @@ export async function POST(req: Request, res: Response) {
     return returnUnauthorized('无权限访问');
   }
 
+  const name = getUserName(user);
+  const nameToNumber = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const hue = nameToNumber % 360;
+  const color = `hsl(${hue}, 80%, 60%)`;
+
   /**
    * 准备一个新的会话以授权用户访问 Liveblocks。
    *
@@ -75,11 +80,11 @@ export async function POST(req: Request, res: Response) {
    *  - 为用户建立安全的连接通道
    *  - 为后续的用户身份验证和房间访问做准备
    */
-  console.log('liveblocks-auth user >>> ', user, user.fullName);
   const session = liveblocks.prepareSession(user.id, {
     userInfo: {
       name: getUserName(user),
       avatar: user.imageUrl,
+      color,
     },
   });
 

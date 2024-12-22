@@ -104,7 +104,6 @@ export const FontSizeExtension = Extension.create<FontSizeOptions>({
               const parentNode = element.closest(
                 this.options.disallowedNodes?.map(node => `[data-type="${node}"]`).join(','),
               );
-              console.log(this.options.disallowedNodes, parentNode);
 
               if (parentNode) {
                 return;

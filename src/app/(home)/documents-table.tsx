@@ -17,8 +17,6 @@ interface DocumentsTableProps {
 }
 
 export const DocumentsTable = ({ documents, status, isLoading, loadMore }: DocumentsTableProps) => {
-  console.log('DocumentsTable documents >>> ', documents);
-
   const loadText = useMemo(() => {
     if (status === 'LoadingMore') {
       return '正在加载';
