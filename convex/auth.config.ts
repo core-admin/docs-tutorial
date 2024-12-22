@@ -1,7 +1,7 @@
 export default {
   providers: [
     {
-      domain: 'https://above-shrimp-52.clerk.accounts.dev',
+      domain: 'https://clerk.google-doc.foxi.love',
       applicationID: 'convex',
     },
   ],
