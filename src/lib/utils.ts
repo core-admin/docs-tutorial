@@ -28,3 +28,14 @@ export function getUserName(user: User) {
   }
   return name || '匿名用户';
 }
+
+export function getUserOtherInfo(user: User) {
+  const name = getUserName(user);
+  const nameToNumber = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const hue = nameToNumber % 360;
+  const color = `hsl(${hue}, 80%, 60%)`;
+  return {
+    color,
+    name,
+  };
+}

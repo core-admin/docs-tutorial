@@ -1,6 +1,6 @@
 'use server';
 
-import { getUserName } from '@/lib/utils';
+import { getUserOtherInfo } from '@/lib/utils';
 import { auth, clerkClient, User } from '@clerk/nextjs/server';
 import { ConvexHttpClient } from 'convex/browser';
 import { api } from '../../../../convex/_generated/api';
@@ -21,11 +21,15 @@ export async function getUsers() {
     organizationId: [sessionClaims.org_id as string],
   });
 
-  const users = response.data.map(user => ({
-    id: user.id,
-    name: getUserName(user),
-    avatar: user.imageUrl,
-  }));
+  const users = response.data.map(user => {
+    const { color, name } = getUserOtherInfo(user);
+    return {
+      id: user.id,
+      name,
+      avatar: user.imageUrl,
+      color,
+    };
+  });
 
   return users;
 }

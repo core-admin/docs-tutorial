@@ -2,7 +2,7 @@ import { Liveblocks } from '@liveblocks/node';
 import { ConvexHttpClient } from 'convex/browser';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { api } from '../../../../convex/_generated/api';
-import { getUserName } from '@/lib/utils';
+import { getUserOtherInfo } from '@/lib/utils';
 
 const returnUnauthorized = (message: string) => {
   return new Response(JSON.stringify({ message }), {
@@ -58,10 +58,7 @@ export async function POST(req: Request) {
     return returnUnauthorized('无权限访问');
   }
 
-  const name = getUserName(user);
-  const nameToNumber = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const hue = nameToNumber % 360;
-  const color = `hsl(${hue}, 80%, 60%)`;
+  const { color, name } = getUserOtherInfo(user);
 
   /**
    * 准备一个新的会话以授权用户访问 Liveblocks。
@@ -82,7 +79,7 @@ export async function POST(req: Request) {
    */
   const session = liveblocks.prepareSession(user.id, {
     userInfo: {
-      name: getUserName(user),
+      name,
       avatar: user.imageUrl,
       color,
     },
