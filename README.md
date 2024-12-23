@@ -14,6 +14,20 @@ A real-time collaborative document editing platform built with Next.js, Convex, 
 - 🎨 Modern UI design
 - 🛠 Comprehensive development toolchain support
 
+## Preview
+
+![Login and Dashboard](/docs/preview/preview1.png)
+*Login interface and project dashboard - Secure authentication and document management*
+
+![Organization Management](/docs/preview/preview2.png)
+*Organization creation and management - Team collaboration made easy*
+
+![Rich Text Editor](/docs/preview/preview3.png)
+*Feature-rich text editor - Comprehensive formatting and editing tools*
+
+![Real-time Collaboration](/docs/preview/preview4.png)
+*Real-time collaboration - Live editing, presence awareness, and inline commenting*
+
 ## Feature Set
 
 - 🔄 Real-time collaborative editing
