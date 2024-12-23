@@ -6,7 +6,7 @@
 
 ## 项目特点
 
-- 🚀 基于 Next.js 14 App Router 架构
+- 🚀 基于 Next.js 15 App Router 架构
 - 💾 使用 Convex 实现实时数据同步
 - 🔐 集成 Clerk 提供完整的身份认证
 - ⚡️ 支持实时协作,无缝多人编辑

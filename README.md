@@ -6,7 +6,7 @@ A real-time collaborative document editing platform built with Next.js, Convex, 
 
 ## Key Features
 
-- 🚀 Built on Next.js 14 App Router architecture
+- 🚀 Built on Next.js 15 App Router architecture
 - 💾 Real-time data synchronization with Convex
 - 🔐 Complete authentication with Clerk
 - ⚡️ Real-time collaboration for seamless multi-user editing
